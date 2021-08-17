@@ -25,6 +25,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Open-Sans', ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                xxs: ['0.625rem', { lineHeight: '1rem' }],
+            },
         },
     },
 
@@ -34,5 +37,5 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')],
 };

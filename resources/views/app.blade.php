@@ -17,7 +17,7 @@
         @routes
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans bg-gray-background antialiased text-gray-900 text-base">
+    <body class="font-sans bg-gray-custom antialiased text-gray-900 text-base">
         @inertia
 
         @env ('local')

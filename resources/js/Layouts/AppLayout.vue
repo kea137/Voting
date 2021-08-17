@@ -40,7 +40,7 @@
                 </ul>
 
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
-                    <li><a href="#" class="text-gray-600 border-b-4 pb-4 border-blue-500">Implemented(8)</a></li>
+                    <li><a href="#" class="text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Implemented(8)</a></li>
                     <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Closed(89)</a></li>
                 </ul>
             </nav>
