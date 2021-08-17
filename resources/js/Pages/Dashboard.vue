@@ -30,16 +30,18 @@
                         Vote
                     </button>
                 </div>
-                <div class="px-2 py-6 flex">
-                    <a href="#" class="flex-none">
+                <div class="px-2 py-6 flex flex-1">
+                    <div class="flex-none">
+                        <a href="#">
                         <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
                     </a>
-                    <div class="mx-4">
+                    </div>
+                    <div class="w-full mx-4">
                         <h4 class=" text-xl font-semibold">
                         <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
                         </h4>
                         <div class="text-gray-600 mt-3 line-clamp-3">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. In quis rem enim modi, possimus quaerat dolorum. Eligendi, dolores molestiae, placeat harum quaerat asperiores tempora fugit officiis culpa debitis modi repellat!
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
                         </div>
                         <div class="items-center flex justify-between mt-6">
                             <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
@@ -71,12 +73,10 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
 
     export default {
         components: {
             AppLayout,
-            Welcome,
         },
     }
 </script>

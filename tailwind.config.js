@@ -14,6 +14,7 @@ module.exports = {
         extend: {
             colors: {
                 'gray-background': '#f7f8fc',
+                'purple': '#5B21B6'
             },
             spacing: {
                 70: '17.5rem',
