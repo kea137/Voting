@@ -29,11 +29,12 @@
 
     <main class="container flex mx-auto max-w-custom">
         <div class=" w-70 px-2 py-1">
-            <div class="bg-white border border-blue-100 rounded-xl mt-16">
-                <div class="text-center px-6 py-2 pt-6">
+            <div class="bg-white border border-blue-100 rounded-xl mt-16 p-1 bg-gradient-to-b from-blue-200 to-blue-50">
+                <div class="w-full h-full bg-gray-background rounded-xl">
+                    <div class="text-center px-6 py-2 pt-6">
                     <h1 class="font-semibold">Add an Idea</h1>
                     <p class="text-xs mt-4">let us know what you think</p>
-                </div>
+                    </div>
                 <form action="#" method="POST" class="space-y-4 px-4 py-6">
                     <div>
                         <input type="text" class="bg-gray-100 border-none placeholder-gray-900 text-sm rounded-xl w-full px-4 py-2" placeholder="Your Idea">
@@ -58,6 +59,7 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
         <div class=" w-175">
