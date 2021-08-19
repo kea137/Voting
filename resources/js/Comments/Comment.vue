@@ -1,5 +1,5 @@
 <template>
-        <div class="comment-container relative space-y-6 my-6">
+        <div class="md:  comment-container relative space-y-6 my-6">
             <div class=" bg-white flex rounded-xl idea-container">
                 <div class="px-4 py-6 flex flex-1">
                     <div class="flex-none">
@@ -23,7 +23,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                                     </svg>
                                     <transition name="fade">
-                                        <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white rounded-xl py-3 shadow-lg">
+                                        <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white rounded-xl py-3 shadow-lg md:ml-8 top-8 md:top-6 right-0 md:left-0">
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
                                         </ul>

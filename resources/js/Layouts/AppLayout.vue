@@ -1,11 +1,11 @@
 <template>
     <Head title="Welcome" />
-    <header class="flex items-center justify-between px-8 py-4">
+    <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4">
         <a href="#">
             <img src="http://127.0.0.1/Voting/public/images/logo.png" class=" h-10 w-auto" alt="logo">
         </a>
 
-        <div class="items-center flex">
+        <div class="items-center mt-2 md:mt-0 flex">
             <form v-if="$page.props.user" method="POST" @submit.prevent="logout">
             <button class="text-sm text-gray-700" type="submit">
                 Log out
@@ -27,9 +27,9 @@
         </div>
     </header>
 
-    <main class="container flex mx-auto max-w-custom">
-        <div class=" w-70 px-2 py-1">
-            <div class="bg-white border border-blue-100 rounded-xl mt-16 p-1 bg-gradient-to-b from-blue-200 to-blue-50">
+    <main class="container flex flex-col md:flex-row mx-auto max-w-custom">
+        <div class=" w-70 px-2 py-1 mx-auto md:mx-0">
+            <div class="bg-white md:sticky top-6 border border-blue-100 rounded-xl mt-16 p-1 bg-gradient-to-b from-blue-200 to-blue-50">
                 <div class="w-full h-full bg-gray-background rounded-xl">
                     <div class="text-center px-6 py-2 pt-6">
                     <h1 class="font-semibold">Add an Idea</h1>
@@ -62,8 +62,8 @@
                 </div>
             </div>
         </div>
-        <div class=" w-175">
-            <nav class="flex items-center justify-between text-xs">
+        <div class="w-full px-2 md:px-0 md:w-175">
+            <nav class="hidden md:flex items-center justify-between text-xs">
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
                     <li><a href="#" class="border-b-4 pb-4 border-blue-500">All Ideas(89)</a></li>
                     <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Considering(6)</a></li>

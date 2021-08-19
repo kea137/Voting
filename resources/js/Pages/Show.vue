@@ -27,8 +27,8 @@
                         </div>
                         <div class="items-center flex justify-between mt-6">
                             <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
-                                <div class="font-semibold">John Doe</div>
-                                <div>&bull;</div>
+                                <div class="font-semibold hidden md:block">John Doe</div>
+                                <div class="hidden md:block">&bull;</div>
                                 <div>10 hours ago</div>
                                 <div>&bull;</div>
                                 <div>Category</div>
@@ -36,19 +36,28 @@
                                 <div class="text-gray-900">Comment</div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <div class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+                                <div class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2">Open</div>
                                 <button @click="hide" @keydown.esc="hide" class="relative border border-none dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                                     </svg>
                                     <transition name="fade">
-                                        <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white rounded-xl py-3 shadow-lg">
+                                        <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white md:ml-8 top-8 md:top-6 right-0 md:left-0 rounded-xl py-3 shadow-lg">
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
                                         </ul>
                                     </transition>
                                 </button>
                             </div>
+                        </div>
+                        <div class="md:hidden flex mt-2 items-center">
+                                <div class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2">
+                                    <div class="text-sm font-bold leading-none">12</div>
+                                    <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
+                                </div>
+                                <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                                    Vote
+                                </button>
                         </div>
                     </div>
                 </div>
@@ -156,7 +165,7 @@
                         </div>
             </div>
             <div class="flex items-center space-x-3">
-                <div class="bg-white font-semibold text-center rounded-xl px-3 py-2">
+                <div class="hidden md:block bg-white font-semibold text-center rounded-xl px-3 py-2">
                     <div class="text-xl leading-snug">12</div>
                     <div class="text-gray-400 text-xxs leading-none uppercase">Votes</div>
                 </div>
@@ -166,7 +175,7 @@
             </div>
         </div>
 
-        <div class="comments-container ml-24 my-6 space-y-8 relative mt-1 pt-6">
+        <div class="md:comments-container ml-24 my-6 space-y-8 relative mt-1 pt-6">
         <comment></comment>
         <admin-comment></admin-comment>
         <comment></comment>

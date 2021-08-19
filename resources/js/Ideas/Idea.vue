@@ -1,0 +1,94 @@
+<template>
+        <div class="ideas-container space-y-6 my-6">
+            <div class=" bg-white hover:shadow-xl transition duration-150 ease-in flex rounded-xl idea-container cursor-pointer">
+                <div class="hidden md:block border-r border-gray-200 px-5 py-8">
+                    <div class="text-center">
+                        <div class="font-semibold text-2xl">
+                            12
+                        </div>
+                        <div class="text-gray-500 uppercase text-xs">Votes</div>
+                    </div>
+                    <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl mt-4 py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                        Vote
+                    </button>
+                </div>
+                <div class="px-2 py-6 flex flex-1">
+                    <div class="flex-none">
+                        <a href="#">
+                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
+                    </a>
+                    </div>
+                    <div class="w-full mx-4 flex flex-col justify-between">
+                        <h4 class=" text-xl font-semibold">
+                        <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
+                        </h4>
+                        <div class="text-gray-600 mt-3 line-clamp-3">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
+                        </div>
+                        <div class="md:items-center flex flex-col md:flex-row md:justify-between mt-6">
+                            <div class="flex items-center text-xs text-gray-400 font-semibold md:space-x-2">
+                                <div>10 hours ago</div>
+                                <div>&bull;</div>
+                                <div>Category</div>
+                                <div>&bull;</div>
+                                <div class="text-gray-900">Comment</div>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-3 md:mt-0">
+                                <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+                                <button v-on:click="hide" class="relative dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                                    </svg>
+                                    <ul v-if="bool" class="absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
+                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
+                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
+                                    </ul>
+                                </button>
+                            </div>
+
+                            <div class="md:hidden flex mt-2 items-center">
+                                <div class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2">
+                                    <div class="text-sm font-bold leading-none">12</div>
+                                    <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
+                                </div>
+                                <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                                    Vote
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</template>
+
+<script>
+
+    export default {
+        data() {
+            return {
+                bool: false,
+            }
+        },
+
+        methods:{
+            hide: function(){
+                this.bool = !this.bool
+            },
+
+            close: function(event){
+            if(!event.target.closest('.dropdown')){
+                this.bool = false
+                }
+            }
+        },
+
+        watch:{
+            bool(bool){
+                if(bool){
+                    document.addEventListener('click', this.close)
+                }
+            }
+        }
+    }
+</script>
