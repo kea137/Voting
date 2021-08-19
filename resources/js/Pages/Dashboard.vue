@@ -53,11 +53,11 @@
                             </div>
                             <div class="flex items-center space-x-2">
                                 <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
-                                <button class="relative ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
+                                <button v-on:click="hide" class="relative dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                                     </svg>
-                                    <ul class="absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
+                                    <ul v-if="bool" class="absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
                                         <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
                                         <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
                                     </ul>
@@ -78,5 +78,31 @@
         components: {
             AppLayout,
         },
+
+        data() {
+            return {
+                bool: false,
+            }
+        },
+
+        methods:{
+            hide: function(){
+                this.bool = !this.bool
+            },
+
+            close: function(event){
+            if(!event.target.closest('.dropdown')){
+                this.bool = false
+                }
+            }
+        },
+
+        watch:{
+            bool(bool){
+                if(bool){
+                    document.addEventListener('click', this.close)
+                }
+            }
+        }
     }
 </script>

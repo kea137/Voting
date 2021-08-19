@@ -36,15 +36,17 @@
                                 <div class="text-gray-900">Comment</div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
-                                <button class="relative ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
+                                <div class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+                                <button @click="hide" @keydown.esc="hide" class="relative border border-none dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                                     </svg>
-                                    <ul class="hidden absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
-                                    </ul>
+                                    <transition name="fade">
+                                        <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white rounded-xl py-3 shadow-lg">
+                                            <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
+                                            <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
+                                        </ul>
+                                    </transition>
                                 </button>
                             </div>
                         </div>
@@ -55,101 +57,102 @@
 
         <div class="flex items-center justify-between mt-4">
             <div class="flex justify-between items-center space-x-3 ml-3">
-                        <div class="relative">
-                            <button type="button" class="flex items-center justify-center h-11 w-32 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-700 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
+                        <div class="relative reply">
+                            <button @click="hideReply" type="button" class="flex items-center justify-center h-11 w-32 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-700 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
                             <span>Reply</span>
                             </button>
-                        <div class="hidden absolute z-10 w-104 text-left font-semibold rounded-xl mt-2 text-sm bg-white shadow-dialog">
-                            <form action="#" method="POST" class="space-y-4 px-4 py-6">
-                                <div>
-                                    <textarea name="post_comment" id="post_comment" cols="30" rows="4" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border border-none px-4 py-6" placeholder="Your thoughts..."></textarea>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <button type="button" class="flex items-center justify-center h-11 w-1/2 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-700 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
-                                        <span>Post Comment</span>
-                                    </button>
-                                    <button type="button" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                                        </svg>
-                                        <span class="ml-2">Attach</span>
-                                    </button>
-                                </div>
-                            </form>
+                                <transition name="fade">
+                                    <div v-if="replyBool" class="absolute z-10 w-104 text-left font-semibold rounded-xl mt-2 text-sm bg-white shadow-dialog">
+                                        <form action="#" method="POST" class="space-y-4 px-4 py-6">
+                                            <div>
+                                                <textarea name="post_comment" id="post_comment" cols="30" rows="4" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border border-none px-4 py-6" placeholder="Your thoughts..."></textarea>
+                                            </div>
+                                            <div class="flex items-center space-x-3">
+                                                <button type="button" class="flex items-center justify-center h-11 w-1/2 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-700 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
+                                                    <span>Post Comment</span>
+                                                </button>
+                                                <button type="button" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                                    </svg>
+                                                    <span class="ml-2">Attach</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </transition>
                         </div>
-                        </div>
-                        <div class="relative">
-                            <button type="button" class="flex items-center justify-center h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                        <div class="relative status">
+                            <button @click="hideStatus" type="button" class="flex items-center justify-center h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
                             <span class="mr-2">Set Status</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute z-20 w-76 text-left font-semibold rounded-xl mt-2 text-sm bg-white shadow-dialog">
-                            <form action="#" method="POST" class="space-y-4 px-4 py-6">
-                                <div class="space-y-2">
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="bg-gray-200 text-gray-600 border-none" name="status" value="1" checked>
-                                    <span class="ml-2">Open</span>
-                                </label>
+                            <transition name="fade">
+                                <div v-if="statusBool" class="absolute z-20 w-76 text-left font-semibold rounded-xl mt-2 text-sm bg-white shadow-dialog">
+                                <form action="#" method="POST" class="space-y-4 px-4 py-6">
+                                    <div class="space-y-2">
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="bg-gray-200 text-gray-600 border-none" name="status" value="1" checked>
+                                        <span class="ml-2">Open</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="bg-gray-200 text-purple border-none" name="status" value="2">
+                                        <span class="ml-2">Considering</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="bg-gray-200 text-yellow-500 border-none" name="status" value="3">
+                                        <span class="ml-2">In Progress</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="bg-gray-200 text-green-500 border-none" name="status" value="3">
+                                        <span class="ml-2">Implemented</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="bg-gray-200 text-red-500 border-none" name="status" value="3">
+                                        <span class="ml-2">Closed</span>
+                                    </label>
+                                </div>
                             </div>
                             <div>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="bg-gray-200 text-purple border-none" name="status" value="2">
-                                    <span class="ml-2">Considering</span>
-                                </label>
+                                <textarea name="update_comment" id="update_comments" cols="30" rows="3" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Add an update comment (optional)"></textarea>
+                            </div>
+                            <div class="flex items-center justify-between space-x-3">
+                                <button
+                                    type="button"
+                                    class="flex items-center justify-center w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-3"
+                                >
+                                    <svg class="text-gray-600 w-4 transform -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                    </svg>
+                                    <span class="ml-1">Attach</span>
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
+                                >
+                                    <span class="ml-1">Update</span>
+                                </button>
                             </div>
                             <div>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="bg-gray-200 text-yellow-500 border-none" name="status" value="3">
-                                    <span class="ml-2">In Progress</span>
+                                <label class="font-normal inline-flex items-center">
+                                    <input type="checkbox" name="notify_voters" class="rounded bg-gray-200" checked="">
+                                    <span class="ml-2">Notify all voters</span>
                                 </label>
                             </div>
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="bg-gray-200 text-green-500 border-none" name="status" value="3">
-                                    <span class="ml-2">Implemented</span>
-                                </label>
+                                </form>
                             </div>
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" class="bg-gray-200 text-red-500 border-none" name="status" value="3">
-                                    <span class="ml-2">Closed</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <textarea name="update_comment" id="update_comments" cols="30" rows="3" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Add an update comment (optional)"></textarea>
-                        </div>
-
-                        <div class="flex items-center justify-between space-x-3">
-                            <button
-                                type="button"
-                                class="flex items-center justify-center w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-3"
-                            >
-                                <svg class="text-gray-600 w-4 transform -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                                </svg>
-                                <span class="ml-1">Attach</span>
-                            </button>
-                            <button
-                                type="submit"
-                                class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
-                            >
-                                <span class="ml-1">Update</span>
-                            </button>
-                        </div>
-
-                        <div>
-                            <label class="font-normal inline-flex items-center">
-                                <input type="checkbox" name="notify_voters" class="rounded bg-gray-200" checked="">
-                                <span class="ml-2">Notify all voters</span>
-                            </label>
-                        </div>
-                            </form>
-                        </div>
+                            </transition>
                         </div>
             </div>
             <div class="flex items-center space-x-3">
@@ -164,131 +167,82 @@
         </div>
 
         <div class="comments-container ml-24 my-6 space-y-8 relative mt-1 pt-6">
-            <div class="comment-container relative space-y-6 my-6">
-            <div class=" bg-white flex rounded-xl idea-container">
-                <div class="px-4 py-6 flex flex-1">
-                    <div class="flex-none">
-                        <a href="#">
-                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
-                    </a>
-                    </div>
-                    <div class="w-full mx-4">
-                        <!-- <h4 class=" text-xl font-semibold">
-                        <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
-                        </h4> -->
-                        <div class="text-gray-600 mt-3">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
-                        </div>
-                        <div class="items-center flex justify-between mt-6">
-                            <div class="flex items-center text-xs text-gray-400 space-x-2">
-                                <div class="font-bold text-gray-900">John Doe</div>
-                                <div>&bull;</div>
-                                <div>10 hours ago</div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="relative ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                                    </svg>
-                                    <ul class="hidden absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
-                                    </ul>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="comment-container is-admin p-1 bg-gradient-to-b from-blue-200 relative to-blue-50 rounded-xl space-y-6 my-6">
-            <div class=" w-full h-full">
-            <div class=" bg-white flex rounded-xl idea-container">
-                <div class="px-4 py-6 flex flex-1">
-                    <div class="flex-none">
-                        <a href="#">
-                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
-                        <div class="font-bold text-blue-500 text-xxs mt-3 text-center">Admin</div>
-                    </a>
-                    </div>
-                    <div class="w-full mx-4">
-                        <h4 class=" text-xl font-semibold">
-                        <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
-                        </h4>
-                        <div class="text-gray-600 mt-3">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
-                        </div>
-                        <div class="items-center flex justify-between mt-6">
-                            <div class="flex items-center text-xs text-gray-400 space-x-2">
-                                <div class="font-bold text-blue-500">John Doe</div>
-                                <div>&bull;</div>
-                                <div>10 hours ago</div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="relative ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                                    </svg>
-                                    <ul class="hidden absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
-                                    </ul>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
-            <div class="comment-container relative space-y-6 my-6">
-            <div class=" bg-white flex rounded-xl idea-container">
-                <div class="px-4 py-6 flex flex-1">
-                    <div class="flex-none">
-                        <a href="#">
-                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
-                    </a>
-                    </div>
-                    <div class="w-full mx-4">
-                        <!-- <h4 class=" text-xl font-semibold">
-                        <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
-                        </h4> -->
-                        <div class="text-gray-600 mt-3">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
-                        </div>
-                        <div class="items-center flex justify-between mt-6">
-                            <div class="flex items-center text-xs text-gray-400 space-x-2">
-                                <div class="font-bold text-gray-900">John Doe</div>
-                                <div>&bull;</div>
-                                <div>10 hours ago</div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <button class="relative ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                                    </svg>
-                                    <ul class="hidden absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg">
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
-                                        <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
-                                    </ul>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <comment></comment>
+        <admin-comment></admin-comment>
+        <comment></comment>
         </div>
     </app-layout>
 </template>
 
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
+    import Comment from '@/Comments/Comment.vue'
+    import AdminComment from '@/Comments/Admin_comment.vue'
+
     export default {
         components: {
             AppLayout,
+            Comment,
+            AdminComment,
         },
+
+        data(){
+            return {
+                replyBool: false,
+                statusBool: false,
+                bool: false
+            }
+        },
+
+        methods: {
+            hide: function(){
+                this.bool = !this.bool
+            },
+            hideReply: function(){
+                this.replyBool = !this.replyBool
+            },
+
+            hideStatus: function(){
+                this.statusBool = !this.statusBool
+            },
+
+            close: function(event){
+                if(!event.target.closest('.dropdown')){
+                    this.bool = false
+                }
+            },
+
+            closeReply: function(event){
+                if(!event.target.closest('.reply')){
+                    this.replyBool = false
+                }
+            },
+
+            closeStatus: function(event){
+                if(!event.target.closest('.status')){
+                    this.statusBool = false
+                }
+            }
+        },
+
+        watch: {
+            bool(bool){
+                if(bool){
+                    document.addEventListener('click', this.close)
+                }
+            },
+            replyBool(replyBool){
+                if(replyBool){
+                    document.addEventListener('click', this.closeReply)
+                }
+            },
+            statusBool(statusBool){
+                if(statusBool){
+                    document.addEventListener('click', this.closeStatus)
+                }
+            }
+
+        }
+
     }
 </script>

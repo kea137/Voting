@@ -1,6 +1,19 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .15s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active below version 2.1.8 */
+
+{
+    opacity: 0;
+}
+
 
 /* vertical line to the left of the comments */
 
