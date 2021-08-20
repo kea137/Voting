@@ -20,14 +20,14 @@
                     </div>
                     <div class="w-full mx-4 flex flex-col justify-between">
                         <h4 class=" text-xl font-semibold">
-                        <a href="#" class="text-gray-900 hover:text-gray-700">Random Heading goes here...</a>
+                        <Link :href="route('idea', slug)" class="text-gray-900 hover:text-gray-700">{{ title }}</Link>
                         </h4>
                         <div class="text-gray-600 mt-3 line-clamp-3">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta commodi impedit aut. Fuga nisi expedita hic ea ullam incidunt deleniti consectetur dolores! Deserunt iste dolorum animi accusamus harum hic alias!
+                            {{ description }}
                         </div>
                         <div class="md:items-center flex flex-col md:flex-row md:justify-between mt-6">
                             <div class="flex items-center text-xs text-gray-400 font-semibold md:space-x-2">
-                                <div>10 hours ago</div>
+                                <div>{{ moment(time).fromNow() }}</div>
                                 <div>&bull;</div>
                                 <div>Category</div>
                                 <div>&bull;</div>
@@ -63,13 +63,23 @@
 </template>
 
 <script>
+    import { Link } from '@inertiajs/inertia-vue3'
+    import moment from 'moment';
 
     export default {
+        components: {
+            Link,
+            moment,
+        },
+
         data() {
             return {
                 bool: false,
+                moment: moment,
             }
         },
+
+        props: ['title', 'time', 'description', 'slug', 'id'],
 
         methods:{
             hide: function(){
@@ -80,6 +90,12 @@
             if(!event.target.closest('.dropdown')){
                 this.bool = false
                 }
+            }
+        },
+
+        filters: {
+            ago(date){
+                return moment(date).fromNow();
             }
         },
 

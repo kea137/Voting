@@ -1,5 +1,5 @@
 <template>
-    <div class="md:comment-container md:is-admin p-1 bg-gradient-to-b from-blue-200 relative to-blue-50 rounded-xl space-y-6 my-6">
+    <div class="comment-container is-admin p-1 bg-gradient-to-b from-blue-200 relative to-blue-50 rounded-xl space-y-6 my-6">
             <div class=" w-full h-full">
             <div class=" bg-white flex rounded-xl idea-container">
                 <div class="px-4 py-6 flex flex-1">

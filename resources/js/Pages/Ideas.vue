@@ -17,15 +17,17 @@
                 </div>
             </div>
         </div>
-        <idea></idea>
-        <idea></idea>
-        <idea></idea>
+        <div v-for="idea in ideas">
+            <idea v-bind:title="idea.title" :id="idea.id" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
+        </div>
+
     </app-layout>
 </template>
 
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
     import Idea from '@/Ideas/Idea.vue'
+
     export default {
         components: {
             AppLayout,
@@ -38,6 +40,12 @@
             }
         },
 
+        computed: {
+            ideas() {
+            return this.$page.props.ideas
+            }
+        },
+
         methods:{
             hide: function(){
                 this.bool = !this.bool
@@ -47,7 +55,8 @@
             if(!event.target.closest('.dropdown')){
                 this.bool = false
                 }
-            }
+            },
+
         },
 
         watch:{

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IdeaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,18 +15,18 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-});
-
 Route::get('/show', function () {
     return Inertia::render('Show');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::get('/', [IdeaController::class, 'index'])->name('ideas');
+
+Route::get('/ideas', [IdeaController::class, 'indexing_ideas'])->name('index.ideas');
+
+Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
+
+// Route::middleware(['auth:sanctum', 'verified'])->get('/ideas', function () {
+//     return Inertia::render('Ideas');
+// })->name('dashboard');
+
+

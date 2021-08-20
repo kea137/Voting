@@ -1,5 +1,5 @@
 <template>
-        <div class="md:  comment-container relative space-y-6 my-6">
+        <div class="comment-container relative space-y-6 my-6">
             <div class=" bg-white flex rounded-xl idea-container">
                 <div class="px-4 py-6 flex flex-1">
                     <div class="flex-none">
