@@ -17,9 +17,9 @@
                 </div>
             </div>
         </div>
-        <div v-for="idea in ideas">
-            <idea v-bind:title="idea.title" :id="idea.id" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
-        </div>
+            <div v-for="idea in ideas">
+                <idea :title="idea.title" :id="idea.id" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
+            </div>
 
     </app-layout>
 </template>
@@ -31,7 +31,7 @@
     export default {
         components: {
             AppLayout,
-            Idea
+            Idea,
         },
 
         data() {

@@ -21,8 +21,6 @@ Route::get('/show', function () {
 
 Route::get('/', [IdeaController::class, 'index'])->name('ideas');
 
-Route::get('/ideas', [IdeaController::class, 'indexing_ideas'])->name('index.ideas');
-
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/ideas', function () {

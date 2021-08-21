@@ -20,8 +20,8 @@
     <body class="font-sans bg-gray-background antialiased text-gray-900 text-base">
         @inertia
 
-        @env ('local')
+        {{-- @env ('local')
             <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
-        @endenv
+        @endenv --}}
     </body>
 </html>

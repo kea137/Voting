@@ -1,5 +1,5 @@
 <template>
-        <div class="ideas-container space-y-6 my-6">
+        <div class="idea-container space-y-6 my-6" @click="clickAnywhere">
             <div class=" bg-white hover:shadow-xl transition duration-150 ease-in flex rounded-xl idea-container cursor-pointer">
                 <div class="hidden md:block border-r border-gray-200 px-5 py-8">
                     <div class="text-center">
@@ -20,7 +20,7 @@
                     </div>
                     <div class="w-full mx-4 flex flex-col justify-between">
                         <h4 class=" text-xl font-semibold">
-                        <Link :href="route('idea', slug)" class="text-gray-900 hover:text-gray-700">{{ title }}</Link>
+                        <Link :href="route('idea', slug)" class="idea-link text-gray-900 hover:text-gray-700">{{ title }}</Link>
                         </h4>
                         <div class="text-gray-600 mt-3 line-clamp-3">
                             {{ description }}
@@ -64,7 +64,7 @@
 
 <script>
     import { Link } from '@inertiajs/inertia-vue3'
-    import moment from 'moment';
+    import moment from 'moment'
 
     export default {
         components: {
@@ -89,6 +89,18 @@
             close: function(event){
             if(!event.target.closest('.dropdown')){
                 this.bool = false
+                }
+            },
+
+            clickAnywhere: function(event){
+
+                const target = event.target.tagName.toLowerCase()
+
+                // const target =
+                const ignores = ['button', 'svg', 'path', 'a']
+
+                if(!ignores.includes(target)){
+                    event.target.closest('.idea-container').querySelector('.idea-link').click()
                 }
             }
         },

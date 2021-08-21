@@ -29,7 +29,9 @@
     "dependencies": {
         "@inertiajs/inertia-vue": "^0.7.2",
         "@tailwindcss/line-clamp": "^0.2.1",
+        "laravel-vue-pagination": "^2.3.1",
         "vue-clickaway": "^2.2.2",
-        "vue-moment": "^4.1.0"
+        "vue-moment": "^4.1.0",
+        "vue-paginate": "^3.6.0"
     }
 }
