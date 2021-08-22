@@ -19,7 +19,9 @@ Route::get('/show', function () {
     return Inertia::render('Show');
 });
 
-Route::get('/', [IdeaController::class, 'index'])->name('ideas');
+Route::get('/ideas', [IdeaController::class, 'index'])->name('ideas');
+
+Route::get('/index_ideas', [IdeaController::class, 'index_ideas'])->name('index.ideas');
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 

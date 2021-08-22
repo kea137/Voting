@@ -63,4 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ideas(){
         return $this->hasMany(Idea::class);
     }
+
+    public function getGravatarAttribute()
+    {
+        $hash = md5($this->email);
+        return "http://www.gravatar.com/avatar/$hash";
+    }
 }

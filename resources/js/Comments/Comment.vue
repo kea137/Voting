@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 
 export default {
     data(){
@@ -45,6 +46,7 @@ export default {
             bool: false,
         }
     },
+
     methods: {
         toggle: function(){
             this.bool = !this.bool

@@ -18,9 +18,8 @@
             </div>
         </div>
             <div v-for="idea in ideas">
-                <idea :title="idea.title" :id="idea.id" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
+                <idea  :title="idea.title" :gravatar="idea.user.email" :id="idea.id" :category="idea.category.name" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
             </div>
-
     </app-layout>
 </template>
 
@@ -56,7 +55,6 @@
                 this.bool = false
                 }
             },
-
         },
 
         watch:{
@@ -65,6 +63,6 @@
                     document.addEventListener('click', this.close)
                 }
             }
-        }
+        },
     }
 </script>

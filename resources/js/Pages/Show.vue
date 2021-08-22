@@ -10,7 +10,7 @@
         </div>
 
 
-        <main-idea :id="idea.id" :title="idea.title" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="user.name"></main-idea>
+        <main-idea :id="idea.id" :title="idea.title" :gravatar="idea.user.email" :category="idea.category.name" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="user.name"></main-idea>
 
         <div class="flex items-center justify-between mt-4">
             <div class="flex justify-between items-center space-x-3 ml-3">

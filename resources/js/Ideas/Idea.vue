@@ -15,7 +15,7 @@
                 <div class="px-2 py-6 flex flex-1">
                     <div class="flex-none">
                         <a href="#">
-                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
+                        <img :src="avatar" alt="" class="w-14 h-14 rounded-xl">
                     </a>
                     </div>
                     <div class="w-full mx-4 flex flex-col justify-between">
@@ -29,7 +29,7 @@
                             <div class="flex items-center text-xs text-gray-400 font-semibold md:space-x-2">
                                 <div>{{ moment(time).fromNow() }}</div>
                                 <div>&bull;</div>
-                                <div>Category</div>
+                                <div>{{ category }}</div>
                                 <div>&bull;</div>
                                 <div class="text-gray-900">Comment</div>
                             </div>
@@ -65,6 +65,7 @@
 <script>
     import { Link } from '@inertiajs/inertia-vue3'
     import moment from 'moment'
+    import md5 from 'md5'
 
     export default {
         components: {
@@ -76,10 +77,15 @@
             return {
                 bool: false,
                 moment: moment,
+                avatar: '',
             }
         },
 
-        props: ['title', 'time', 'description', 'slug', 'id'],
+        created(){
+            this.hash()
+        },
+
+        props: ['title', 'time', 'description', 'slug', 'id', 'gravatar', 'category'],
 
         methods:{
             hide: function(){
@@ -92,12 +98,16 @@
                 }
             },
 
+            hash: function (){
+                this.avatar = 'http://gravatar.com/avatar/' + md5(this.gravatar)
+            },
+
             clickAnywhere: function(event){
 
                 const target = event.target.tagName.toLowerCase()
 
                 // const target =
-                const ignores = ['button', 'svg', 'path', 'a']
+                const ignores = ['button', 'svg', 'path', 'a', 'img']
 
                 if(!ignores.includes(target)){
                     event.target.closest('.idea-container').querySelector('.idea-link').click()

@@ -4,7 +4,7 @@
                 <div class="px-4 py-6 flex flex-1">
                     <div class="flex-none">
                         <a href="#">
-                        <img src="https://www.gravatar.com/avatar/0000?d=mp" alt="" class="w-14 h-14 rounded-xl">
+                        <img :src="avatar" alt="" class="w-14 h-14 rounded-xl">
                     </a>
                     </div>
                     <div class="w-full mx-4">
@@ -20,7 +20,7 @@
                                 <div class="hidden md:block">&bull;</div>
                                 <div>{{ moment(time).fromNow() }}</div>
                                 <div>&bull;</div>
-                                <div>Category</div>
+                                <div>{{ category }}</div>
                                 <div>&bull;</div>
                                 <div class="text-gray-900">Comment</div>
                             </div>
@@ -56,19 +56,32 @@
 
 <script>
 import moment from 'moment'
+import md5 from 'md5'
 
 export default {
     components: {
         moment,
     },
 
+    created(){
+        this.hash()
+    },
+
     data() {
         return {
             moment:moment,
+            avatar: '',
+            gravatar: this.gravatar,
         }
     },
 
-    props: ['id', 'title', 'description', 'slug', 'time', 'user_name'],
+    methods: {
+        hash: function (){
+                this.avatar = 'http://gravatar.com/avatar/' + md5(this.gravatar)
+        },
+    },
+
+    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category'],
 
 }
 </script>
