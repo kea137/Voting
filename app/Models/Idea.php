@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Status;
 use App\Models\Category;
 
 class Idea extends Model
@@ -35,5 +36,9 @@ class Idea extends Model
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function status(){
+        return $this->belongsTo(Status::class);
     }
 }

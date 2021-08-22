@@ -25,7 +25,7 @@
                                 <div class="text-gray-900">Comment</div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <div class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2">Open</div>
+                                <div :class="{'text-white': true, 'bg-red-500': ('Red'== status), 'bg-green-500': ('Green'==status), 'bg-blue-500': ('Blue'==status), 'bg-yellow-500': ('Yellow'==status), 'bg-gray-500': ('Gray'==status)}" class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2">{{ status }}</div>
                                 <button @click="hide" @keydown.esc="hide" class="relative border border-none dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
@@ -70,6 +70,7 @@ export default {
     data() {
         return {
             moment:moment,
+            bool: false,
             avatar: '',
             gravatar: this.gravatar,
         }
@@ -79,9 +80,27 @@ export default {
         hash: function (){
                 this.avatar = 'http://gravatar.com/avatar/' + md5(this.gravatar)
         },
+
+        hide: function(){
+                this.bool = !this.bool
+        },
+
+        close: function(event){
+            if(!event.target.closest('.dropdown')){
+                this.bool = false
+                }
+        },
     },
 
-    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category'],
+    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status'],
+
+    watch: {
+        bool(bool){
+                if(bool){
+                    document.addEventListener('click', this.close)
+                }
+        }
+    }
 
 }
 </script>

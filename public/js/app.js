@@ -19151,7 +19151,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.hash();
   },
-  props: ['title', 'time', 'description', 'slug', 'id', 'gravatar', 'category'],
+  props: ['title', 'time', 'description', 'slug', 'id', 'gravatar', 'category', 'status'],
   methods: {
     hide: function hide() {
       this.bool = !this.bool;
@@ -19217,6 +19217,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       moment: (moment__WEBPACK_IMPORTED_MODULE_0___default()),
+      bool: false,
       avatar: '',
       gravatar: this.gravatar
     };
@@ -19224,9 +19225,24 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hash: function hash() {
       this.avatar = 'http://gravatar.com/avatar/' + md5__WEBPACK_IMPORTED_MODULE_1___default()(this.gravatar);
+    },
+    hide: function hide() {
+      this.bool = !this.bool;
+    },
+    close: function close(event) {
+      if (!event.target.closest('.dropdown')) {
+        this.bool = false;
+      }
     }
   },
-  props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category']
+  props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status'],
+  watch: {
+    bool: function bool(_bool) {
+      if (_bool) {
+        document.addEventListener('click', this.close);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -21324,7 +21340,7 @@ var _hoisted_8 = {
   "class": " text-xl font-semibold"
 };
 var _hoisted_9 = {
-  "class": "text-gray-600 mt-3 line-clamp-3"
+  "class": "text-gray-500 mt-3 line-clamp-3"
 };
 var _hoisted_10 = {
   "class": "md:items-center flex flex-col md:flex-row md:justify-between mt-6"
@@ -21351,13 +21367,7 @@ var _hoisted_15 = {
   "class": "flex items-center space-x-2 mt-3 md:mt-0"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4"
-}, "Open", -1
-/* HOISTED */
-);
-
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   "class": "h-6 w-6",
   fill: "none",
@@ -21372,28 +21382,28 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_18 = {
+var _hoisted_17 = {
   key: 0,
   "class": "absolute w-40 semi-bold bg-white rounded-xl py-3 shadow-lg"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "hover:bg-gray-200 my-1 transition duration-150 ease-in block"
 }, "Mark as Stamp")], -1
 /* HOISTED */
 );
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "hover:bg-gray-200 my-1 transition duration-150 ease-in block"
 }, "Delete Post")], -1
 /* HOISTED */
 );
 
-var _hoisted_21 = [_hoisted_19, _hoisted_20];
+var _hoisted_20 = [_hoisted_18, _hoisted_19];
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"md:hidden flex mt-2 items-center\"><div class=\"bg-gray-100 text-center rounded-xl h-10 px-4 py-2\"><div class=\"text-sm font-bold leading-none\">12</div><div class=\"text-xxs text-gray-400 leading-none font-semibold uppercase mt-1\">Votes</div></div><button class=\"w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150\"> Vote </button></div>", 1);
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"md:hidden flex mt-2 items-center\"><div class=\"bg-gray-100 text-center rounded-xl h-10 px-4 py-2\"><div class=\"text-sm font-bold leading-none\">12</div><div class=\"text-xxs text-gray-400 leading-none font-semibold uppercase mt-1\">Votes</div></div><button class=\"w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150\"> Vote </button></div>", 1);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -21429,12 +21439,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.category), 1
   /* TEXT */
-  ), _hoisted_13, _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), _hoisted_13, _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'text-white': true,
+      'bg-red-500': 'Red' == $props.status,
+      'bg-green-500': 'Green' == $props.status,
+      'bg-blue-500': 'Blue' == $props.status,
+      'bg-yellow-500': 'Yellow' == $props.status,
+      'bg-gray-500': 'Gray' == $props.status
+    }, " text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4"])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.status), 3
+  /* TEXT, CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.hide && $options.hide.apply($options, arguments);
     }),
     "class": "relative dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3"
-  }, [_hoisted_17, $data.bool ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_18, _hoisted_21)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_22])])])])]);
+  }, [_hoisted_16, $data.bool ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_17, _hoisted_20)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_21])])])])]);
 }
 
 /***/ }),
@@ -21515,13 +21536,7 @@ var _hoisted_18 = {
   "class": "flex items-center space-x-2"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2"
-}, "Open", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   "class": "h-6 w-6",
   fill: "none",
@@ -21536,28 +21551,28 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = {
+var _hoisted_20 = {
   key: 0,
   "class": "absolute w-40 semi-bold z-30 bg-white md:ml-8 top-8 md:top-6 right-0 md:left-0 rounded-xl py-3 shadow-lg"
 };
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "hover:bg-gray-200 my-1 transition duration-150 ease-in block"
 }, "Mark as Stamp")], -1
 /* HOISTED */
 );
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "hover:bg-gray-200 my-1 transition duration-150 ease-in block"
 }, "Delete Post")], -1
 /* HOISTED */
 );
 
-var _hoisted_24 = [_hoisted_22, _hoisted_23];
+var _hoisted_23 = [_hoisted_21, _hoisted_22];
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"md:hidden flex mt-2 items-center\"><div class=\"bg-gray-100 text-center rounded-xl h-10 px-4 py-2\"><div class=\"text-sm font-bold leading-none\">12</div><div class=\"text-xxs text-gray-400 leading-none font-semibold uppercase mt-1\">Votes</div></div><button class=\"w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150\"> Vote </button></div>", 1);
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"md:hidden flex mt-2 items-center\"><div class=\"bg-gray-100 text-center rounded-xl h-10 px-4 py-2\"><div class=\"text-sm font-bold leading-none\">12</div><div class=\"text-xxs text-gray-400 leading-none font-semibold uppercase mt-1\">Votes</div></div><button class=\"w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150\"> Vote </button></div>", 1);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -21576,26 +21591,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.category), 1
   /* TEXT */
-  ), _hoisted_16, _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), _hoisted_16, _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'text-white': true,
+      'bg-red-500': 'Red' == $props.status,
+      'bg-green-500': 'Green' == $props.status,
+      'bg-blue-500': 'Blue' == $props.status,
+      'bg-yellow-500': 'Yellow' == $props.status,
+      'bg-gray-500': 'Gray' == $props.status
+    }, "bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2"])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.status), 3
+  /* TEXT, CLASS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
-      return _ctx.hide && _ctx.hide.apply(_ctx, arguments);
+      return $options.hide && $options.hide.apply($options, arguments);
     }),
     onKeydown: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function () {
-      return _ctx.hide && _ctx.hide.apply(_ctx, arguments);
+      return $options.hide && $options.hide.apply($options, arguments);
     }, ["esc"])),
     "class": "relative border border-none dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3"
-  }, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+  }, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "fade"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_ctx.bool ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_21, _hoisted_24)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      return [$data.bool ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_20, _hoisted_23)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
 
   })], 32
   /* HYDRATE_EVENTS */
-  )])]), _hoisted_25])])])]);
+  )])]), _hoisted_24])])])]);
 }
 
 /***/ }),
@@ -24026,6 +24052,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.ideas, function (idea) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_idea, {
           title: idea.title,
+          status: idea.status.name,
           gravatar: idea.user.email,
           id: idea.id,
           category: idea.category.name,
@@ -24034,7 +24061,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           time: idea.created_at
         }, null, 8
         /* PROPS */
-        , ["title", "gravatar", "id", "category", "description", "slug", "time"])]);
+        , ["title", "status", "gravatar", "id", "category", "description", "slug", "time"])]);
       }), 256
       /* UNKEYED_FRAGMENT */
       ))];
@@ -25402,10 +25429,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         description: $options.idea.description,
         slug: $options.idea.slug,
         time: $options.idea.created_at,
-        user_name: $options.user.name
+        user_name: $options.idea.user.name,
+        status: $options.idea.status.name
       }, null, 8
       /* PROPS */
-      , ["id", "title", "gravatar", "category", "description", "slug", "time", "user_name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      , ["id", "title", "gravatar", "category", "description", "slug", "time", "user_name", "status"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[0] || (_cache[0] = function () {
           return $options.hideReply && $options.hideReply.apply($options, arguments);
         }),
