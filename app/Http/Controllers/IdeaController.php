@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,7 +21,8 @@ class IdeaController extends Controller
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'ideas'=>Idea::all()->load('user', 'category', 'status'),
+            'ideas'=>Idea::all()->load('user', 'category', 'status')->sortBy([['id', 'desc']]),
+            'categories'=>Category::all(),
         ]);
     }
 
@@ -29,9 +31,30 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title'=>'required|String|min:4',
+            'category'=>'required|integer',
+            'description'=>'required|String|min:4'
+        ]);
+
+        if(auth()){
+            Idea::create([
+                'user_id'=>auth()->user()->id,
+                'status_id'=>5,
+                'title'=>$validated['title'],
+                'category_id'=>$validated['category'],
+                'description'=>$validated['description'],
+            ]);
+
+            session()->flash('Idea','The Idea was Created');
+
+            return redirect()->to('ideas');
+        }   else{
+            return abort(403);
+        }
+
     }
 
     /**
@@ -56,6 +79,7 @@ class IdeaController extends Controller
         return Inertia::render('Show', [
             'idea' => $idea->load('user', 'category', 'status'),
             'user' => $idea->user,
+            'categories' => Category::all(),
         ]);
     }
 

@@ -17,7 +17,7 @@
                     Log in
                 </Link>
 
-                <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700">
+                <Link :href="route('register')" class="ml-4 text-sm text-gray-700">
                     Register
                 </Link>
             </template>
@@ -33,19 +33,31 @@
                 <div class="w-full h-full bg-gray-background rounded-xl">
                     <div class="text-center px-6 py-2 pt-6">
                     <h1 class="font-semibold">Add an Idea</h1>
-                    <p class="text-xs mt-4">let us know what you think</p>
+                    <p v-if="$page.props.user" class="text-xs mt-4">
+                        Let us know what you think
+                    </p>
+                        <div v-else>
+                        Log in to add your Ideas
+                        </div>
                     </div>
-                <form action="#" method="POST" class="space-y-4 px-4 py-6">
+                <form @submit.prevent="form.post(route('create'), { preserveScroll: true, onSuccess:()=>form.reset('title', 'description')})" method="POST" class="space-y-4 px-4 py-6">
+                    <div v-if="$page.props.user" class="space-y-3">
                     <div>
-                        <input type="text" class="bg-gray-100 border-none placeholder-gray-900 text-sm rounded-xl w-full px-4 py-2" placeholder="Your Idea">
+                        <p class="text-xs font-semibold text-red-500 items-center" v-if="errors.title">{{ errors.title }}</p>
+                        <input type="text" v-model="form.title" class="bg-gray-100 border-none placeholder-gray-900 text-sm rounded-xl w-full px-4 py-2" placeholder="Your Idea's Title">
                     </div>
-                    <div>
-                        <select name="category_add" id="category_add" class=" bg-gray-100 text-sm border-none rounded-xl px-4 py-2 w-full">
-                            <option value="1">Category One</option>
+                    <div >
+                        <select v-model="form.category" name="category_add"  id="category_add" class=" bg-gray-100 text-sm border-none rounded-xl px-4 py-2 w-full">
+                            <p class="text-xs items-center font-semibold text-red-500" v-if="errors.category">{{ errors.category }}</p>
+                            <option selected="selected" :value="1">First</option>
+                            <template v-for="category in categories">
+                                <option v-if="category.id != 1" :value="category.id">{{ category.name }}</option>
+                            </template>
                         </select>
                     </div>
                     <div>
-                        <textarea name="idea" id="idea" cols="30" rows="4" class="rounded-xl px-4 py-2 border-none text-sm placeholder-gray-900 w-full bg-gray-100" placeholder="Describe your idea..."></textarea>
+                        <p class="text-xs font-semibold text-red-500 items-center" v-if="errors.description">{{ errors.description }}</p>
+                        <textarea name="idea" id="idea" v-model="form.description" cols="30" rows="4" class="rounded-xl px-4 py-2 border-none text-sm placeholder-gray-900 w-full bg-gray-100" placeholder="Describe your idea..."></textarea>
                     </div>
                     <div class="flex justify-between items-center space-x-3">
                         <button type="button" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
@@ -54,9 +66,18 @@
                             </svg>
                             <span class="ml-2">Attach</span>
                         </button>
-                        <button type="submit" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-400 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
+                        <button type="submit" :disabled="form.processing" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-blue-500 text-white hover:bg-blue-400 bg-blue-500 rounded-xl transition duration-150 ease-in px-6 py-3">
                             <span>Submit</span>
                         </button>
+                    </div>
+                    </div>
+                    <div v-else class=" flex items-center flex-col space-y-3">
+                        <Link :href="route('login')" class="flex items-center justify-center w-1/2 h-11 text-xs font-semibold border border-gray-300 text-gray-900 hover:bg-gray-100 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                            Log in
+                        </Link>
+                        <Link :href="route('register')" class="flex items-center justify-center w-1/2 h-11  text-xs font-semibold border border-blue-500 text-white hover:bg-blue-400 bg-blue-500 rounded-xl transition duration-150 ease-in px-4 py-3">
+                            Register
+                        </Link>
                     </div>
                 </form>
                 </div>
@@ -66,13 +87,13 @@
             <nav class="hidden md:flex items-center justify-between text-xs">
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
                     <li><a href="#" class="border-b-4 pb-4 border-blue-500">All Ideas(89)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Considering(6)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">In-Progress(6)</a></li>
+                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-yellow-400">Considering(6)</a></li>
+                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-green-400">In-Progress(6)</a></li>
                 </ul>
 
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
                     <li><a href="#" class="text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Implemented(8)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Closed(89)</a></li>
+                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-red-400">Closed(89)</a></li>
                 </ul>
             </nav>
             <div class="mt-8">
@@ -92,17 +113,55 @@
             Link,
         },
 
+        data(){
+            return {
+                form: this.$inertia.form({
+                    title: null,
+                    category: null,
+                    description: null,
+                }),
+            }
+        },
+
+        created(){
+            this.form.category = 1
+        },
+
+        computed: {
+            categories(){
+                return this.$page.props.categories
+            },
+            errors(){
+                return this.$page.props.errors
+            }
+        },
+
         props: {
+            // errors: Object,
             canLogin: Boolean,
             canRegister: Boolean,
             laravelVersion: String,
             phpVersion: String,
+            title: String,
+            category: Number,
+            description: String,
         },
 
         methods: {
             logout() {
-                this.$inertia.post(route('logout'));
+                this.$inertia.post(route('logout'))
             },
+
+            // clear(){
+            //     this.form.title = null
+            //     this.form.category = 1
+            //     this.form.description = null
+            // },
+
+            // create(){
+            //     this.$inertia.post(route('create'), this.form)
+            //     this.clear()
+            // }
         }
     }
 </script>

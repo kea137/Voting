@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
         Category::factory()->create(['name'=>'Third']);
         Category::factory()->create(['name'=>'Fourth']);
 
-        Status::factory()->create(['name'=>'Red']);
-        Status::factory()->create(['name'=>'Green']);
-        Status::factory()->create(['name'=>'Blue']);
-        Status::factory()->create(['name'=>'Yellow']);
-        Status::factory()->create(['name'=>'Gray']);
+        Status::factory()->create(['name'=>'Closed']);
+        Status::factory()->create(['name'=>'In Progress']);
+        Status::factory()->create(['name'=>'Implemented']);
+        Status::factory()->create(['name'=>'Considering']);
+        Status::factory()->create(['name'=>'Open']);
         // \App\Models\User::factory(10)->create();
         Idea::factory(30)->create();
     }

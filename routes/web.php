@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\IdeaController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,6 +23,8 @@ Route::get('/ideas', [IdeaController::class, 'index'])->name('ideas');
 Route::get('/index_ideas', [IdeaController::class, 'index_ideas'])->name('index.ideas');
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
+
+Route::post('/ideas_create', [IdeaController::class, 'create'])->name('create');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/ideas', function () {
 //     return Inertia::render('Ideas');
