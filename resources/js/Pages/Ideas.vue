@@ -18,7 +18,7 @@
             </div>
         </div>
             <div v-for="idea in ideas">
-                <idea  :title="idea.title" :status="idea.status.name" :gravatar="idea.user.email" :id="idea.id" :category="idea.category.name" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at"></idea>
+                <idea  :title="idea.title" :status="idea.status.name" :gravatar="idea.user.email" :id="idea.id" :category="idea.category.name" :description="idea.description" v-bind:slug="idea.slug" v-bind:time="idea.created_at" :voted="$page.props.voted.includes(idea.id)" :vote="idea.vote.length"></idea>
             </div>
     </app-layout>
 </template>

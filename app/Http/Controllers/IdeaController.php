@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Idea;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +19,12 @@ class IdeaController extends Controller
      */
     public function index()
     {
+        $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'ideas'=>Idea::all()->load('user', 'category', 'status')->sortBy([['id', 'desc']]),
+            'ideas'=>Idea::all()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
     }
@@ -39,7 +42,7 @@ class IdeaController extends Controller
             'description'=>'required|String|min:4'
         ]);
 
-        if(auth()){
+        if(auth()->check()){
             Idea::create([
                 'user_id'=>auth()->user()->id,
                 'status_id'=>5,
@@ -48,7 +51,7 @@ class IdeaController extends Controller
                 'description'=>$validated['description'],
             ]);
 
-            session()->flash('Idea','The Idea was Created');
+            session()->flash('message','The Idea was Created');
 
             return redirect()->to('ideas');
         }   else{
@@ -77,9 +80,9 @@ class IdeaController extends Controller
     public function show(Idea $idea)
     {
         return Inertia::render('Show', [
-            'idea' => $idea->load('user', 'category', 'status'),
-            'user' => $idea->user,
+            'idea' => $idea->load('user', 'category', 'status', 'vote'),
             'categories' => Category::all(),
+            'voted' => $idea->votedByUser(),
         ]);
     }
 

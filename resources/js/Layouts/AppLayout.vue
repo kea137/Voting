@@ -42,6 +42,9 @@
                     </div>
                 <form @submit.prevent="form.post(route('create'), { preserveScroll: true, onSuccess:()=>form.reset('title', 'description')})" method="POST" class="space-y-4 px-4 py-6">
                     <div v-if="$page.props.user" class="space-y-3">
+                        <div v-if="$page.props.flash.message" class=" mx-4 px-8 items-center text-green-600">
+                            <p class=" text-xs font-bold ml">{{ $page.props.flash.message }}</p>
+                        </div>
                     <div>
                         <p class="text-xs font-semibold text-red-500 items-center" v-if="errors.title">{{ errors.title }}</p>
                         <input type="text" v-model="form.title" class="bg-gray-100 border-none placeholder-gray-900 text-sm rounded-xl w-full px-4 py-2" placeholder="Your Idea's Title">

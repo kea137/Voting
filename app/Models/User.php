@@ -69,4 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $hash = md5($this->email);
         return "http://www.gravatar.com/avatar/$hash";
     }
+
+    public function vote(){
+        return $this->hasMany(Vote::class);
+    }
 }

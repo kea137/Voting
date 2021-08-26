@@ -41,10 +41,10 @@
                         </div>
                         <div class="md:hidden flex mt-2 items-center">
                                 <div class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2">
-                                    <div class="text-sm font-bold leading-none">12</div>
+                                    <div :class="{'text-blue-600': voted}" class="text-sm font-bold leading-none">{{ vote }}</div>
                                     <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
                                 </div>
-                                <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                                <button :class="{'bg-blue-500 text-white': voted, 'bg-gray-200': !voted}" class="w-20 text-xxs font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
                                     Vote
                                 </button>
                         </div>
@@ -92,7 +92,7 @@ export default {
         },
     },
 
-    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status'],
+    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status', 'vote', 'voted'],
 
     watch: {
         bool(bool){

@@ -15,7 +15,6 @@ class Idea extends Model
 
     protected $guarded = [];
 
-
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -41,4 +40,17 @@ class Idea extends Model
     public function status(){
         return $this->belongsTo(Status::class);
     }
+
+    public function vote(){
+        return $this->hasMany(Vote::class);
+    }
+
+    public function votedByUser(){
+        if(auth()){
+            return Vote::where('user_id', auth()->user()->id)->where('idea_id', $this->id)->exists();
+        }
+
+        return false;
+    }
+
 }

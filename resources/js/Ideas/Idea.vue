@@ -3,13 +3,18 @@
             <div class=" bg-white hover:shadow-xl transition duration-150 ease-in flex rounded-xl idea-container cursor-pointer">
                 <div class="hidden md:block border-r border-gray-200 px-5 py-8">
                     <div class="text-center">
-                        <div class="font-semibold text-2xl">
-                            12
+                        <div :class="{'text-blue-500': voted}" class="font-semibold text-2xl">
+                            {{ vote }}
                         </div>
-                        <div class="text-gray-500 uppercase text-xs">Votes</div>
+                        <div :class="{'text-blue-500': voted}" class="text-gray-500 uppercase text-xs">Votes</div>
                     </div>
-                    <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl mt-4 py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
-                        Vote
+                    <button :class="{'text-white bg-blue-500':voted, 'bg-gray-200': !voted}" class="w-20 text-xxs  font-bold uppercase rounded-xl mt-4 py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                        <div v-if="voted">
+                            Voted
+                        </div>
+                        <div v-else>
+                            Vote
+                        </div>
                     </button>
                 </div>
                 <div class="px-2 py-6 flex flex-1">
@@ -47,12 +52,17 @@
                             </div>
 
                             <div class="md:hidden flex mt-2 items-center">
-                                <div class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2">
-                                    <div class="text-sm font-bold leading-none">12</div>
+                                <div :class="{'text-blue-500': voted}" class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2">
+                                <div :class="{'text-blue-500': voted}" class="text-sm font-bold leading-none">{{ vote }}</div>
                                     <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
                                 </div>
                                 <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
-                                    Vote
+                                    <div v-if="voted">
+                                        Voted
+                                    </div>
+                                    <div v-else>
+                                        Vote
+                                    </div>
                                 </button>
                             </div>
                         </div>
@@ -85,7 +95,7 @@
             this.hash()
         },
 
-        props: ['title', 'time', 'description', 'slug', 'id', 'gravatar', 'category', 'status'],
+        props: ['title', 'time', 'description', 'slug', 'id', 'gravatar', 'category', 'status', 'vote', 'voted'],
 
         methods:{
             hide: function(){

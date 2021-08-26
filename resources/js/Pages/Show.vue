@@ -10,7 +10,7 @@
         </div>
 
 
-        <main-idea :id="idea.id" :title="idea.title" :gravatar="idea.user.email" :category="idea.category.name" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="idea.user.name" :status="idea.status.name" ></main-idea>
+        <main-idea :id="idea.id" :title="idea.title" :gravatar="idea.user.email" :category="idea.category.name" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="idea.user.name" :voted="$page.props.voted" :status="idea.status.name" :vote="idea.vote.length" ></main-idea>
 
         <div class="flex items-center justify-between mt-4">
             <div class="flex justify-between items-center space-x-3 ml-3">
@@ -114,10 +114,10 @@
             </div>
             <div class="flex items-center space-x-3">
                 <div class="hidden md:block bg-white font-semibold text-center rounded-xl px-3 py-2">
-                    <div class="text-xl leading-snug">12</div>
-                    <div class="text-gray-400 text-xxs leading-none uppercase">Votes</div>
+                    <div :class="{'text-blue-500': $page.props.voted}" class="text-xl leading-snug">{{ idea.vote.length }}</div>
+                    <div :class="{'text-blue-500':$page.props.voted}" class="text-gray-400 text-xxs leading-none uppercase">Votes</div>
                 </div>
-                <button type="button" class="h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                <button type="button" :class="{'text-white bg-blue-500': $page.props.voted}" class="h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
                     <span class="mr-2 uppercase">Vote</span>
                 </button>
             </div>
@@ -207,9 +207,6 @@
             idea(){
                 return this.$page.props.idea
             },
-            user(){
-                return this.$page.props.user
-            }
         },
 
     }
