@@ -191,7 +191,17 @@
                 if(!event.target.closest('.status')){
                     this.statusBool = false
                 }
-            }
+            },
+
+            onBack(){
+                window.onpopstate = function () {
+                    location.reload()
+                };
+            },
+        },
+
+        mounted () {
+            document.addEventListener("backbutton", this.onBack(), false);
         },
 
         watch: {

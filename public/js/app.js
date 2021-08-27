@@ -21010,7 +21010,15 @@ __webpack_require__.r(__webpack_exports__);
       if (!event.target.closest('.status')) {
         this.statusBool = false;
       }
+    },
+    onBack: function onBack() {
+      window.onpopstate = function () {
+        location.reload();
+      };
     }
+  },
+  mounted: function mounted() {
+    document.addEventListener("backbutton", this.onBack(), false);
   },
   watch: {
     bool: function bool(_bool) {
