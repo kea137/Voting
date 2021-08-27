@@ -117,9 +117,16 @@
                     <div :class="{'text-blue-500': $page.props.voted}" class="text-xl leading-snug">{{ idea.vote.length }}</div>
                     <div :class="{'text-blue-500':$page.props.voted}" class="text-gray-400 text-xxs leading-none uppercase">Votes</div>
                 </div>
-                <button type="button" :class="{'text-white bg-blue-500': $page.props.voted}" class="h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
-                    <span class="mr-2 uppercase">Vote</span>
-                </button>
+                <Link method="post" as="button" preserve-scroll :href="route('vote', $page.props.idea.id)" type="button" :class="{'text-white bg-blue-500': $page.props.voted}" class="h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                    <span class="mr-2 uppercase">
+                        <div v-if="$page.props.voted">
+                            Voted
+                        </div>
+                        <div v-else>
+                            Vote
+                        </div>
+                    </span>
+                </Link>
             </div>
         </div>
 
@@ -136,6 +143,8 @@
     import Comment from '@/Comments/Comment.vue'
     import MainIdea from '@/Ideas/MainIdea.vue'
     import AdminComment from '@/Comments/Admin_comment.vue'
+    import { Link } from '@inertiajs/inertia-vue3'
+
 
     export default {
         components: {
@@ -143,6 +152,7 @@
             MainIdea,
             Comment,
             AdminComment,
+            Link
         },
 
         data(){

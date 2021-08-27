@@ -44,9 +44,14 @@
                                     <div :class="{'text-blue-600': voted}" class="text-sm font-bold leading-none">{{ vote }}</div>
                                     <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
                                 </div>
-                                <button :class="{'bg-blue-500 text-white': voted, 'bg-gray-200': !voted}" class="w-20 text-xxs font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
-                                    Vote
-                                </button>
+                                <Link as="button" type="button" :href="route('vote', id)" preserve-scroll :class="{'bg-blue-500 text-white': voted, 'bg-gray-200': !voted}" class="w-20 text-xxs font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                                    <div v-if="voted">
+                                        Voted
+                                    </div>
+                                    <div v-else>
+                                        Vote
+                                    </div>
+                                </Link>
                         </div>
                     </div>
                 </div>
@@ -55,12 +60,14 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3'
 import moment from 'moment'
 import md5 from 'md5'
 
 export default {
     components: {
         moment,
+        Link,
     },
 
     created(){

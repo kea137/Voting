@@ -1,6 +1,6 @@
 <template>
-        <div class="idea-container space-y-6 my-6" @click="clickAnywhere">
-            <div class=" bg-white hover:shadow-xl transition duration-150 ease-in flex rounded-xl idea-container cursor-pointer">
+        <div class="idea-container space-y-6 my-6">
+            <div @click="clickAnywhere" class=" bg-white hover:shadow-xl transition duration-150 ease-in flex rounded-xl idea-container cursor-pointer">
                 <div class="hidden md:block border-r border-gray-200 px-5 py-8">
                     <div class="text-center">
                         <div :class="{'text-blue-500': voted}" class="font-semibold text-2xl">
@@ -8,14 +8,14 @@
                         </div>
                         <div :class="{'text-blue-500': voted}" class="text-gray-500 uppercase text-xs">Votes</div>
                     </div>
-                    <button :class="{'text-white bg-blue-500':voted, 'bg-gray-200': !voted}" class="w-20 text-xxs  font-bold uppercase rounded-xl mt-4 py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                    <Link :href="route('vote', id)" preserve-scroll as="button" method="post" type="button" :class="{'text-white bg-blue-500':voted, 'bg-gray-200': !voted}" class="w-20 text-xxs  font-bold uppercase rounded-xl mt-4 py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
                         <div v-if="voted">
                             Voted
                         </div>
                         <div v-else>
                             Vote
                         </div>
-                    </button>
+                    </Link>
                 </div>
                 <div class="px-2 py-6 flex flex-1">
                     <div class="flex-none">
@@ -39,7 +39,7 @@
                                 <div class="text-gray-900">Comment</div>
                             </div>
                             <div class="flex items-center space-x-2 mt-3 md:mt-0">
-                                <div :class="{'text-white': true, 'bg-red-500': ('Closed'== status), 'bg-green-500': ('In Progress'==status), 'bg-blue-500': ('Implemented'==status), 'bg-yellow-500': ('Considering'==status), 'bg-gray-500': ('Open'==status)}" class=" text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{ status }}</div>
+                                <button type="button" :class="{'text-white': true, 'bg-red-500': ('Closed'== status), 'bg-green-500': ('In Progress'==status), 'bg-blue-500': ('Implemented'==status), 'bg-yellow-500': ('Considering'==status), 'bg-gray-500': ('Open'==status)}" class=" text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{ status }}</button>
                                 <button v-on:click="hide" class="relative dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
@@ -56,14 +56,14 @@
                                 <div :class="{'text-blue-500': voted}" class="text-sm font-bold leading-none">{{ vote }}</div>
                                     <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
                                 </div>
-                                <button class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
+                                <Link :href="route('vote', id)" preserve-scroll as="button" method="post" type="button" class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
                                     <div v-if="voted">
                                         Voted
                                     </div>
                                     <div v-else>
                                         Vote
                                     </div>
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -116,8 +116,12 @@
 
                 const target = event.target.tagName.toLowerCase()
 
+                const target2 = document.getElementById('vote')
+
+                target2.addEventListener('click', null)
+
                 // const target =
-                const ignores = ['button', 'svg', 'path', 'a', 'img']
+                const ignores = ['button', 'svg', 'path', 'a', 'img', 'Link']
 
                 if(!ignores.includes(target)){
                     event.target.closest('.idea-container').querySelector('.idea-link').click()

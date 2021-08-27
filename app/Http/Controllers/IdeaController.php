@@ -66,9 +66,22 @@ class IdeaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Idea $idea)
     {
-        //
+        if(auth()->check()){
+            if(Vote::where('user_id', auth()->user()->id)->where('idea_id', $idea->id)->exists()){
+                Vote::where('user_id', auth()->user()->id)->where('idea_id', $idea->id)->delete();
+                return redirect()->back();
+            } else{
+                Vote::create([
+                    'user_id'=>auth()->user()->id,
+                    'idea_id'=>$idea->id
+                ]);
+                return redirect()->back();
+            }
+        }
+
+        return redirect()->to(route('login'));
     }
 
     /**

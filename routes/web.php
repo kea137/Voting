@@ -24,6 +24,8 @@ Route::get('/index_ideas', [IdeaController::class, 'index_ideas'])->name('index.
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 
+Route::post('/ideas/{idea}', [IdeaController::class, 'store'])->name('vote');
+
 Route::post('/ideas_create', [IdeaController::class, 'create'])->name('create');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/ideas', function () {

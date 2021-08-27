@@ -9,6 +9,8 @@ class Vote extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'idea_id'];
+
     public function idea(){
         return $this->belongsTo(Idea::class);
     }

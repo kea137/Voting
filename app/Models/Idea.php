@@ -46,7 +46,7 @@ class Idea extends Model
     }
 
     public function votedByUser(){
-        if(auth()){
+        if(auth()->check()){
             return Vote::where('user_id', auth()->user()->id)->where('idea_id', $this->id)->exists();
         }
 
