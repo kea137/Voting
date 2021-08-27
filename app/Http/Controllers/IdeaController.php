@@ -30,6 +30,74 @@ class IdeaController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_considering()
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'ideas'=>Idea::where('status_id', 4)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_inprogress()
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'ideas'=>Idea::where('status_id', 2)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_implemented()
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'ideas'=>Idea::where('status_id', 3)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_closed()
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'ideas'=>Idea::where('status_id', 1)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -89,14 +89,14 @@
         <div class="w-full px-2 md:px-0 md:w-175">
             <nav class="hidden md:flex items-center justify-between text-xs">
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
-                    <li><a href="#" class="border-b-4 pb-4 border-blue-500">All Ideas(89)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-yellow-400">Considering(6)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-green-400">In-Progress(6)</a></li>
+                    <li><Link :href="route('ideas')" :class="{'border-blue-500': route().current('ideas')}" class="border-b-4 pb-4 hover:border-blue-500">All Ideas(89)</Link></li>
+                    <li><Link :href="route('considering')" :class="{'border-yellow-500': route().current('considering')}" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-yellow-500">Considering(6)</Link></li>
+                    <li><Link :href="route('inprogress')" :class="{'border-green-500': route().current('inprogress')}" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-green-500">In-Progress(6)</Link></li>
                 </ul>
 
                 <ul class="flex uppercase font-semibold border-b-4 pb-4 space-x-10">
-                    <li><a href="#" class="text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-400">Implemented(8)</a></li>
-                    <li><a href="#" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-red-400">Closed(89)</a></li>
+                    <li><Link :href="route('implemented')" :class="{'border-blue-500': route().current('implemented')}" class="text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-500">Implemented(8)</Link></li>
+                    <li><Link :href="route('closed')" :class="{'border-red-500': route().current('closed')}" class=" text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-red-400">Closed(89)</Link></li>
                 </ul>
             </nav>
             <div class="mt-8">
@@ -154,17 +154,6 @@
             logout() {
                 this.$inertia.post(route('logout'))
             },
-
-            // clear(){
-            //     this.form.title = null
-            //     this.form.category = 1
-            //     this.form.description = null
-            // },
-
-            // create(){
-            //     this.$inertia.post(route('create'), this.form)
-            //     this.clear()
-            // }
         }
     }
 </script>

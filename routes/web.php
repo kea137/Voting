@@ -20,6 +20,14 @@ Route::get('/show', function () {
 
 Route::get('/ideas', [IdeaController::class, 'index'])->name('ideas');
 
+Route::get('/ideas/considering', [IdeaController::class, 'index_considering'])->name('considering');
+
+Route::get('/ideas/inprogress', [IdeaController::class, 'index_inprogress'])->name('inprogress');
+
+Route::get('/ideas/implemented', [IdeaController::class, 'index_implemented'])->name('implemented');
+
+Route::get('/ideas/closed', [IdeaController::class, 'index_closed'])->name('closed');
+
 Route::get('/index_ideas', [IdeaController::class, 'index_ideas'])->name('index.ideas');
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
