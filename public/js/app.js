@@ -21535,7 +21535,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'text-white': true,
       'bg-red-500': 'Closed' == $props.status,
       'bg-green-500': 'In Progress' == $props.status,
-      'bg-blue-500': 'Implemented' == $props.status,
+      ' bg-purple': 'Implemented' == $props.status,
       'bg-yellow-500': 'Considering' == $props.status,
       'bg-gray-500': 'Open' == $props.status
     }, " text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4"])
@@ -21733,7 +21733,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'text-white': true,
       'bg-red-500': 'Closed' == $props.status,
       'bg-green-500': 'In Progress' == $props.status,
-      'bg-blue-500': 'Implemented' == $props.status,
+      'bg-purple': 'Implemented' == $props.status,
       'bg-yellow-500': 'Considering' == $props.status,
       'bg-gray-500': 'Open' == $props.status
     }, "bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2"])
@@ -22912,7 +22912,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     href: _ctx.route('ideas'),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'border-blue-500': _ctx.route().current('ideas')
-    }, "border-b-4 pb-4 hover:border-blue-500"])
+    }, "border-b-4 pb-4 hover:border-blue-500 transition ease-in duration-150"])
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_36];
@@ -22953,8 +22953,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["href", "class"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
     href: _ctx.route('implemented'),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
-      'border-blue-500': _ctx.route().current('implemented')
-    }, "text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-blue-500"])
+      ' border-purple': _ctx.route().current('implemented')
+    }, "text-gray-600 transition duration-150 ease-in border-b-4 pb-4 hover:border-purple"])
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_40];
