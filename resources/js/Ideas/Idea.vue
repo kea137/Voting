@@ -56,13 +56,7 @@
                                 <div :class="{'text-blue-500': voted}" class="text-sm font-bold leading-none">{{ vote }}</div>
                                     <div class="text-xxs text-gray-400 leading-none font-semibold uppercase mt-1">Votes</div>
                                 </div>
-                                <Link :href="route('vote', id)" preserve-scroll as="button" method="post" type="button" class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
-                                    <div v-if="voted">
-                                        Voted
-                                    </div>
-                                    <div v-else>
-                                        Vote
-                                    </div>
+                                <Link v-text="{'Voted': voted, 'Vote':!voted}" :href="route('vote', id)" preserve-scroll as="button" method="post" type="button" class="w-20 text-xxs bg-gray-200 font-bold uppercase rounded-xl py-3 px-4 border border-gray-200 hover:border-gray-400 transition ease-in duration-150">
                                 </Link>
                             </div>
                         </div>
@@ -116,12 +110,7 @@
 
                 const target = event.target.tagName.toLowerCase()
 
-                const target2 = document.getElementById('vote')
-
-                target2.addEventListener('click', null)
-
-                // const target =
-                const ignores = ['button', 'svg', 'path', 'a', 'img', 'Link']
+                const ignores = ['button', 'svg', 'path', 'a', 'img', 'Link', 'text']
 
                 if(!ignores.includes(target)){
                     event.target.closest('.idea-container').querySelector('.idea-link').click()

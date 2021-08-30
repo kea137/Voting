@@ -24,6 +24,34 @@ class IdeaController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'ideas'=>Idea::all()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>'0',
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_category(Category $category)
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'ideas'=>Idea::where('category_id', $category->id)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>$category->id,
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -40,11 +68,40 @@ class IdeaController extends Controller
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>'0',
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::where('status_id', 4)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_considering_category(Category $category)
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
+            'selected_category'=>$category->id,
+            'ideas'=>Idea::where('status_id', 4)->where('category_id', $category->id)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -57,7 +114,36 @@ class IdeaController extends Controller
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>'0',
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::where('status_id', 2)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_inprogress_category(Category $category)
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
+            'selected_category'=>$category->id,
+            'ideas'=>Idea::where('status_id', 2)->where('category_id', $category->id)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -74,7 +160,36 @@ class IdeaController extends Controller
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>'0',
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::where('status_id', 3)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_implemented_category(Category $category)
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
+            'selected_category'=>$category->id,
+            'ideas'=>Idea::where('status_id', 3)->where('category_id', $category->id)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -91,7 +206,36 @@ class IdeaController extends Controller
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'selected_category'=>'0',
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::where('status_id', 1)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
+            'categories'=>Category::all(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_closed_category(Category $category)
+    {
+        $nul = array('idea_id' => 0);
+        return Inertia::render('Ideas', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
+            'selected_category'=>$category->id,
+            'ideas'=>Idea::where('status_id', 1)->where('category_id', $category->id)->get()->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -163,6 +307,11 @@ class IdeaController extends Controller
         return Inertia::render('Show', [
             'idea' => $idea->load('user', 'category', 'status', 'vote'),
             'categories' => Category::all(),
+            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'considering'=>Idea::where('status_id', 4)->get()->count(),
+            'inprogress'=>Idea::where('status_id', 2)->get()->count(),
+            'implemented'=>Idea::where('status_id', 3)->get()->count(),
+            'closed'=>Idea::where('status_id', 1)->get()->count(),
             'voted' => $idea->votedByUser(),
         ]);
     }
