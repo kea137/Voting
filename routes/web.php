@@ -22,25 +22,15 @@ Route::get('/', function(){
     return redirect()->to(route('ideas'));
 });
 
-Route::get('/ideas', [IdeaController::class, 'index'])->name('ideas');
+Route::get('/ideas/{category?}', [IdeaController::class, 'index'])->name('ideas');
 
-Route::get('/ideas/{category}', [IdeaController::class, 'index_category'])->name('ideas_category');
+Route::get('/considering/{category?}', [IdeaController::class, 'index_considering'])->name('considering');
 
-Route::get('/considering', [IdeaController::class, 'index_considering'])->name('considering');
+Route::get('/closed/{category?}', [IdeaController::class, 'index_closed'])->name('closed');
 
-Route::get('/considering/{category}', [IdeaController::class, 'index_considering_category'])->name('considering_category');
+Route::get('/inprogress/{category?}', [IdeaController::class, 'index_inprogress'])->name('inprogress');
 
-Route::get('/closed', [IdeaController::class, 'index_closed'])->name('closed');
-
-Route::get('/closed/{category}', [IdeaController::class, 'index_closed_category'])->name('closed_category');
-
-Route::get('/inprogress', [IdeaController::class, 'index_inprogress'])->name('inprogress');
-
-Route::get('/inprogress/{category}', [IdeaController::class, 'index_inprogress_category'])->name('inprogress_category');
-
-Route::get('/implemented', [IdeaController::class, 'index_implemented'])->name('implemented');
-
-Route::get('/implemented/{category}', [IdeaController::class, 'index_implemented_category'])->name('implemented_category');
+Route::get('/implemented/{category?}', [IdeaController::class, 'index_implemented'])->name('implemented');
 
 Route::get('/show/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 

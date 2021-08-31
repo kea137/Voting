@@ -20424,7 +20424,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       bool: false,
-      key: '0'
+      key: '0',
+      filter: '0'
     };
   },
   mounted: function mounted() {
@@ -20442,17 +20443,32 @@ __webpack_require__.r(__webpack_exports__);
     hide: function hide() {
       this.bool = !this.bool;
     },
-    onChange: function onChange(event) {
-      if (route().current('ideas') | route().current('ideas_category', 1) | route().current('ideas_category', 2) | route().current('ideas_category', 3) | route().current('ideas_category', 4)) {
-        window.location.href = route('ideas_category', this.key);
-      } else if (route().current('considering') | route().current('considering_category', 1) | route().current('considering_category', 2) | route().current('considering_category', 3) | route().current('considering_category', 4)) {
-        window.location.href = route('considering_category', this.key);
-      } else if (route().current('inprogress') | route().current('inprogress_category', 1) | route().current('inprogress_category', 2) | route().current('inprogress_category', 3) | route().current('inprogress_category', 4)) {
-        window.location.href = route('inprogress_category', this.key);
-      } else if (route().current('implemented') | route().current('implemented_category', 1) | route().current('implemented_category', 2) | route().current('implemented_category', 3) | route().current('implemented_category', 4)) {
-        window.location.href = route('implemented_category', this.key);
-      } else if (route().current('closed') | route().current('closed_category', 1) | route().current('closed_category', 2) | route().current('closed_category', 3) | route().current('closed_category', 4)) {
-        window.location.href = route('closed_category', this.key);
+    onChange: function onChange() {
+      if (route().current('ideas') | route().current('ideas', {
+        'category': Boolean(this.key)
+      })) {
+        window.location.href = route('ideas', this.key);
+      } else if (route().current('considering') | route().current('considering', {
+        'category': Boolean(this.key)
+      })) {
+        window.location.href = route('considering', this.key);
+      } else if (route().current('inprogress') | route().current('inprogress', {
+        'category': Boolean(this.key)
+      })) {
+        window.location.href = route('inprogress', this.key);
+      } else if (route().current('implemented') | route().current('implemented', {
+        'category': Boolean(this.key)
+      })) {
+        window.location.href = route('implemented', this.key);
+      } else if (route().current('closed') | route().current('closed', {
+        'category': Boolean(this.key)
+      })) {
+        window.location.href = route('closed', this.key);
+      }
+    },
+    onFilter: function onFilter() {
+      if (Boolean(this.filter)) {
+        window.location.href = route(route().current(), this.filter);
       }
     },
     close: function close(event) {
@@ -24397,17 +24413,28 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_3 = ["value"];
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-  name: "OtherFilters",
-  id: "OtherFilters",
-  "class": " border-gray-300 rounded-xl px-4 py-2 md:w-1/3 w-full"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "1"
-}, "Filter One")], -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Filter One", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "1"
+}, "Most Voted", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "2"
+}, "My Ideas", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = [_hoisted_4, _hoisted_5, _hoisted_6];
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "relative w-full md:w-2/3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "search",
@@ -24461,7 +24488,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* UNKEYED_FRAGMENT */
       ))], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.key]]), _hoisted_4, _hoisted_5]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.ideas, function (idea) {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.key]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $data.filter = $event;
+        }),
+        name: "OtherFilters",
+        onChange: _cache[3] || (_cache[3] = function () {
+          return $options.onFilter && $options.onFilter.apply($options, arguments);
+        }),
+        id: "OtherFilters",
+        "class": " border-gray-300 rounded-xl px-4 py-2 md:w-1/3 w-full"
+      }, _hoisted_7, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filter]]), _hoisted_8]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.ideas, function (idea) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_idea, {
           title: idea.title,
           status: idea.status.name,
