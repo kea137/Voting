@@ -62,7 +62,7 @@
                 if(route().current('ideas') | route().current('ideas_category', 1) | route().current('ideas_category', 2) | route().current('ideas_category', 3) | route().current('ideas_category', 4)){
                         window.location.href = route('ideas_category', this.key)
                 } else if(route().current('considering') | route().current('considering_category', 1) | route().current('considering_category', 2) | route().current('considering_category', 3) | route().current('considering_category', 4)) {
-                        window.location.href = route('considering_category', this.key)
+                        window.location.href = route('considering_category', this.cat)
                 } else if(route().current('inprogress') | route().current('inprogress_category', 1) | route().current('inprogress_category', 2) | route().current('inprogress_category', 3) | route().current('inprogress_category', 4)){
                         window.location.href = route('inprogress_category', this.key)
                 } else if(route().current('implemented') | route().current('implemented_category', 1) | route().current('implemented_category', 2) | route().current('implemented_category', 3) | route().current('implemented_category', 4)){
