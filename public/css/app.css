@@ -1166,6 +1166,14 @@ select {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
 }
+.my-auto {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.my-4 {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
 .ml-3 {
 	margin-left: 0.75rem;
 }
@@ -2732,6 +2740,18 @@ select {
 
 	.md\:w-2\/3 {
 		width: 66.666667%;
+	}
+
+	.md\:w-10 {
+		width: 2.5rem;
+	}
+
+	.md\:w-40 {
+		width: 10rem;
+	}
+
+	.md\:w-44 {
+		width: 11rem;
 	}
 
 	.md\:grid-cols-3 {

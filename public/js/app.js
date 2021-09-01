@@ -20425,11 +20425,12 @@ __webpack_require__.r(__webpack_exports__);
     return {
       bool: false,
       key: '0',
-      filter: '0'
+      filter: '0',
+      search: ''
     };
   },
   mounted: function mounted() {
-    return this.key = this.$page.props.selected_category;
+    return [this.filter = this.$page.props.selected_filter, this.key = this.$page.props.selected_category];
   },
   computed: {
     ideas: function ideas() {
@@ -20437,39 +20438,69 @@ __webpack_require__.r(__webpack_exports__);
     },
     categories: function categories() {
       return this.$page.props.categories;
+    },
+    filteredIdeas: function filteredIdeas() {
+      var _this = this;
+
+      return this.ideas.filter(function (idea) {
+        return idea.title.toLowerCase().match(_this.search.toLowerCase());
+      });
     }
   },
   methods: {
     hide: function hide() {
       this.bool = !this.bool;
     },
+    //routing using multiple parameters
     onChange: function onChange() {
       if (route().current('ideas') | route().current('ideas', {
-        'category': Boolean(this.key)
+        'category': this.key,
+        'filter': this.filter
       })) {
-        window.location.href = route('ideas', this.key);
+        window.location.href = route('ideas', {
+          'category': this.key,
+          'filter': this.filter
+        });
       } else if (route().current('considering') | route().current('considering', {
         'category': Boolean(this.key)
       })) {
-        window.location.href = route('considering', this.key);
+        window.location.href = route('considering', {
+          'category': this.key,
+          'filter': this.filter
+        });
       } else if (route().current('inprogress') | route().current('inprogress', {
         'category': Boolean(this.key)
       })) {
-        window.location.href = route('inprogress', this.key);
+        window.location.href = route('inprogress', {
+          'category': this.key,
+          'filter': this.filter
+        });
       } else if (route().current('implemented') | route().current('implemented', {
         'category': Boolean(this.key)
       })) {
-        window.location.href = route('implemented', this.key);
+        window.location.href = route('implemented', {
+          'category': this.key,
+          'filter': this.filter
+        });
       } else if (route().current('closed') | route().current('closed', {
         'category': Boolean(this.key)
       })) {
-        window.location.href = route('closed', this.key);
+        window.location.href = route('closed', {
+          'category': this.key,
+          'filter': this.filter
+        });
       }
     },
     onFilter: function onFilter() {
       if (Boolean(this.filter)) {
-        window.location.href = route(route().current(), this.filter);
+        window.location.href = route(route().current(), {
+          'category': this.key,
+          'filter': this.filter
+        });
       }
+    },
+    onSearch: function onSearch() {
+      if (this.search != '') {}
     },
     close: function close(event) {
       if (!event.target.closest('.dropdown')) {
@@ -24416,7 +24447,7 @@ var _hoisted_3 = ["value"];
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   disabled: "",
   value: "0"
-}, "Filter One", -1
+}, "Select Filter", -1
 /* HOISTED */
 );
 
@@ -24426,23 +24457,22 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_6 = {
+  key: 0
+};
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "2"
 }, "My Ideas", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = [_hoisted_4, _hoisted_5, _hoisted_6];
-
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_8 = [_hoisted_7];
+var _hoisted_9 = {
   "class": "relative w-full md:w-2/3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "search",
-  placeholder: "Find an Idea",
-  "class": "rounded-xl px-4 py-2 pl-8 w-full border-gray-300",
-  name: "",
-  id: ""
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "absolute ml-2 h-full flex top-0 items-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": " w-4 text-gray-500",
@@ -24455,7 +24485,7 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "stroke-linejoin": "round",
   "stroke-width": "2",
   d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-})])])], -1
+})])], -1
 /* HOISTED */
 );
 
@@ -24497,10 +24527,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.onFilter && $options.onFilter.apply($options, arguments);
         }),
         id: "OtherFilters",
-        "class": " border-gray-300 rounded-xl px-4 py-2 md:w-1/3 w-full"
-      }, _hoisted_7, 544
+        "class": " border-gray-300 rounded-xl px-8 py-2 md:w-44 w-full"
+      }, [_hoisted_4, _hoisted_5, _ctx.$page.props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filter]]), _hoisted_8]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.ideas, function (idea) {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filter]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "search",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.search = $event;
+        }),
+        placeholder: "Find an Idea",
+        "class": "rounded-xl px-4 py-2 pl-8 w-full border-gray-300",
+        name: "",
+        id: ""
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]]), _hoisted_10])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredIdeas, function (idea) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_idea, {
           title: idea.title,
           status: idea.status.name,

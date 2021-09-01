@@ -17,22 +17,29 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category = null)
+    public function index($category = null, $filter = null, $search = null)
     {
         $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'ideas'=>Idea::all()->when($category != null, function($query) use($category){
-                return $query->where('category_id', $category->id);
-            })->when($category == null, function($query){
-                return $query;
-            })->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
+                if($filter == '0'){
+                    return $query->where('category_id', $category)->get();
+                } else if($filter == '2'){
+                    return $query->where('category_id', $category)->where('user_id', auth()->check() ? auth()->user()->id : '0')->get();
+                } else if($filter == '1'){
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->orderByDesc('vote_count')->get();
+                }
+            })->when(($category == null) && ($filter == null), function($query){
+                return $query->get();
+            })->load('user', 'category', 'status', 'vote'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
             'all'=>Idea::where('status_id', 5)->get()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
-            'selected_category'=>'0',
+            'selected_category'=>(($category == null) ? '0' : $category),
+            'selected_filter'=>(($filter == null) ? '0' : $filter),
             'closed'=>Idea::where('status_id', 1)->get()->count(),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
@@ -44,7 +51,7 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_considering(Category $category = null)
+    public function index_considering($category = null, $filter = null)
     {
         $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
@@ -54,13 +61,20 @@ class IdeaController extends Controller
             'all'=>Idea::where('status_id', 5)->get()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
-            'selected_category'=>'0',
+            'selected_category'=>(($category == null) ? '0' : $category),
+            'selected_filter'=>(($filter == null) ? '0' : $filter),
             'closed'=>Idea::where('status_id', 1)->get()->count(),
-            'ideas'=>Idea::all()->when($category != null, function($query) use($category){
-                return $query->where('category_id', $category->id)->where('status_id', 4);
-            })->when($category == null, function($query){
-                return $query->where('status_id', 4);
-            })->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
+                if($filter == '0'){
+                    return $query->where('category_id', $category)->where('status_id', 4)->get();
+                } else if($filter == '2'){
+                    return $query->where('category_id', $category)->where('status_id', 4)->where('user_id', auth()->check() ? auth()->user()->id : '0')->get();
+                } else if($filter == '1'){
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 4)->orderByDesc('vote_count')->get();
+                }
+            })->when(($category == null) && ($filter == null), function($query){
+                return $query->where('status_id', 4)->get();
+            })->load('user', 'category', 'status', 'vote'),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -71,7 +85,7 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_inprogress(Category $category = null)
+    public function index_inprogress($category = null, $filter = null)
     {
         $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
@@ -81,13 +95,20 @@ class IdeaController extends Controller
             'all'=>Idea::where('status_id', 5)->get()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
-            'selected_category'=>'0',
             'closed'=>Idea::where('status_id', 1)->get()->count(),
-            'ideas'=>Idea::all()->when($category != null, function($query) use($category){
-                return $query->where('category_id', $category->id)->where('status_id', 2);
-            })->when($category == null, function($query){
-                return $query->where('status_id', 2);
-            })->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'selected_category'=>(($category == null) ? '0' : $category),
+            'selected_filter'=>(($filter == null) ? '0' : $filter),
+            'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
+                if($filter == '0'){
+                    return $query->where('category_id', $category)->where('status_id', 2)->get();
+                } else if($filter == '2'){
+                    return $query->where('category_id', $category)->where('status_id', 2)->where('user_id', auth()->check() ? auth()->user()->id : '0')->get();
+                } else if($filter == '1'){
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 2)->orderByDesc('vote_count')->get();
+                }
+            })->when(($category == null) && ($filter == null), function($query){
+                return $query->where('status_id', 2)->get();
+            })->load('user', 'category', 'status', 'vote'),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -98,7 +119,7 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_implemented(Category $category = null)
+    public function index_implemented($category = null, $filter = null)
     {
         $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
@@ -108,13 +129,20 @@ class IdeaController extends Controller
             'all'=>Idea::where('status_id', 5)->get()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
-            'selected_category'=>'0',
             'closed'=>Idea::where('status_id', 1)->get()->count(),
-            'ideas'=>Idea::all()->when($category != null, function($query) use($category){
-                return $query->where('category_id', $category->id)->where('status_id', 3);
-            })->when($category == null, function($query){
-                return $query->where('status_id', 3);
-            })->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'selected_category'=>(($category == null) ? '0' : $category),
+            'selected_filter'=>(($filter == null) ? '0' : $filter),
+            'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
+                if($filter == '0'){
+                    return $query->where('category_id', $category)->where('status_id', 3)->get();
+                } else if($filter == '2'){
+                    return $query->where('category_id', $category)->where('status_id', 3)->where('user_id', auth()->check() ? auth()->user()->id : '0')->get();
+                } else if($filter == '1'){
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 3)->orderByDesc('vote_count')->get();
+                }
+            })->when(($category == null) && ($filter == null), function($query){
+                return $query->where('status_id', 3)->get();
+            })->load('user', 'category', 'status', 'vote'),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);
@@ -125,7 +153,7 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_closed(Category $category = null)
+    public function index_closed($category = null, $filter = null)
     {
         $nul = array('idea_id' => 0);
         return Inertia::render('Ideas', [
@@ -133,15 +161,23 @@ class IdeaController extends Controller
             'canRegister' => Route::has('register'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
             'all'=>Idea::where('status_id', 5)->get()->count(),
+            'selected_category'=>(($category == null) ? '0' : $category),
+            'selected_filter'=>(($filter == null) ? '0' : $filter),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
             'selected_category'=>'0',
             'closed'=>Idea::where('status_id', 1)->get()->count(),
-            'ideas'=>Idea::all()->when($category != null, function($query) use($category){
-                return $query->where('category_id', $category->id)->where('status_id', 5);
-            })->when($category == null, function($query){
-                return $query->where('status_id', 5);
-            })->load('user', 'category', 'status', 'vote')->sortBy([['id', 'desc']]),
+            'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
+                if($filter == '0'){
+                    return $query->where('category_id', $category)->where('status_id', 1)->get();
+                } else if($filter == '2'){
+                    return $query->where('category_id', $category)->where('status_id', 1)->where('user_id', auth()->check() ? auth()->user()->id : '0')->get();
+                } else if($filter == '1'){
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 1)->orderByDesc('vote_count')->get();
+                }
+            })->when(($category == null) && ($filter == null), function($query){
+                return $query->where('status_id', 1)->get();
+            })->load('user', 'category', 'status', 'vote'),
             'voted'=>auth()->check() ? (json_encode(array_values(Vote::where('user_id', auth()->user()->id)->get('idea_id')->toArray()))) : json_encode($nul),
             'categories'=>Category::all(),
         ]);

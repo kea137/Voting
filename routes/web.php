@@ -22,15 +22,15 @@ Route::get('/', function(){
     return redirect()->to(route('ideas'));
 });
 
-Route::get('/ideas/{category?}', [IdeaController::class, 'index'])->name('ideas');
+Route::get('/ideas/{category?}/{filter?}', [IdeaController::class, 'index'])->name('ideas');
 
-Route::get('/considering/{category?}', [IdeaController::class, 'index_considering'])->name('considering');
+Route::get('/considering/{category?}/{filter?}', [IdeaController::class, 'index_considering'])->name('considering');
 
-Route::get('/closed/{category?}', [IdeaController::class, 'index_closed'])->name('closed');
+Route::get('/closed/{category?}/{filter?}', [IdeaController::class, 'index_closed'])->name('closed');
 
-Route::get('/inprogress/{category?}', [IdeaController::class, 'index_inprogress'])->name('inprogress');
+Route::get('/inprogress/{category?}/{filter?}', [IdeaController::class, 'index_inprogress'])->name('inprogress');
 
-Route::get('/implemented/{category?}', [IdeaController::class, 'index_implemented'])->name('implemented');
+Route::get('/implemented/{category?}/{filter?}', [IdeaController::class, 'index_implemented'])->name('implemented');
 
 Route::get('/show/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 
