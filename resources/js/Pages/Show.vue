@@ -1,7 +1,7 @@
 <template>
     <app-layout>
         <div>
-            <a :href="route('ideas')" class="font-semibold flex items-center hover:text-gray-500 transition duration:150 ease-in">
+            <a @click="clicked" :href="back" class="font-semibold flex items-center hover:text-gray-500 transition duration:150 ease-in">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
@@ -40,43 +40,45 @@
                                 </transition>
                         </div>
                         <div class="relative status">
-                            <button @click="hideStatus" type="button" class="flex items-center justify-center h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
-                            <span class="mr-2">Set Status</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
+                                <div v-if="$page.props.user">
+                                    <button @click="hideStatus" type="button" class="flex items-center justify-center h-11 text-xs font-semibold border border-gray-200 hover:border-gray-400 bg-gray-200 rounded-xl transition duration-150 ease-in px-6 py-3">
+                                    <span class="mr-2">Set Status</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    </button>
+                                </div>
                             <transition name="fade">
                                 <div v-if="statusBool" class="absolute z-20 w-76 text-left font-semibold rounded-xl mt-2 text-sm bg-white shadow-dialog">
-                                <form action="#" method="POST" class="space-y-4 px-4 py-6">
+                                <form @submit.prevent="form.put(route('update'), {preserveScroll: true, onSuccess: () => (statusBool = false)})"  class="space-y-4 px-4 py-6">
                                     <div class="space-y-2">
                                 <div>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" class="bg-gray-200 text-gray-600 border-none" name="status" value="1" checked>
+                                        <input v-model="status_radio" @change="radio(5)" type="radio" class="bg-gray-200 text-gray-600 border-none" name="status" v-bind:value="5">
                                         <span class="ml-2">Open</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" class="bg-gray-200 text-purple border-none" name="status" value="2">
+                                        <input v-model="status_radio" @change="radio(4)" type="radio" class="bg-gray-200 text-yellow-500 border-none" name="status" v-bind:value="4">
                                         <span class="ml-2">Considering</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" class="bg-gray-200 text-yellow-500 border-none" name="status" value="3">
+                                        <input v-model="status_radio" @change="radio(2)" type="radio" class="bg-gray-200 text-green-500 border-none" name="status" v-bind:value="2">
                                         <span class="ml-2">In Progress</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" class="bg-gray-200 text-green-500 border-none" name="status" value="3">
+                                        <input v-model="status_radio" @change="radio(3)" type="radio" class="bg-gray-200 text-purple border-none" name="status" v-bind:value="3">
                                         <span class="ml-2">Implemented</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="inline-flex items-center">
-                                        <input type="radio" class="bg-gray-200 text-red-500 border-none" name="status" value="3">
+                                        <input v-model="status_radio" @change="radio(1)" type="radio" class="bg-gray-200 text-red-500 border-none" name="status" v-bind:value="1">
                                         <span class="ml-2">Closed</span>
                                     </label>
                                 </div>
@@ -145,7 +147,6 @@
     import AdminComment from '@/Comments/Admin_comment.vue'
     import { Link } from '@inertiajs/inertia-vue3'
 
-
     export default {
         components: {
             AppLayout,
@@ -160,6 +161,13 @@
                 replyBool: false,
                 statusBool: false,
                 bool: false,
+                back: '',
+                value: '',
+                status_radio: this.$page.props.idea.status.id,
+                form: this.$inertia.form({
+                    status_radio: null,
+                    idea_id: this.$page.props.idea.id
+                }),
             }
         },
 
@@ -193,6 +201,14 @@
                 }
             },
 
+            radio(value){
+                this.form.status_radio = value
+            },
+
+            clicked(){
+                this.back = window.history.back()
+            },
+
             onBack(){
                 window.onpopstate = function () {
                     location.reload()
@@ -201,7 +217,7 @@
         },
 
         mounted () {
-            document.addEventListener("backbutton", this.onBack(), false);
+            document.addEventListener("backbutton", this.onBack(), false)
         },
 
         watch: {
@@ -219,8 +235,7 @@
                 if(statusBool){
                     document.addEventListener('click', this.closeStatus)
                 }
-            }
-
+            },
         },
 
         computed: {

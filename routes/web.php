@@ -32,6 +32,8 @@ Route::get('/inprogress/{category?}/{filter?}', [IdeaController::class, 'index_i
 
 Route::get('/implemented/{category?}/{filter?}', [IdeaController::class, 'index_implemented'])->name('implemented');
 
+Route::put('/ideas/status_update', [IdeaController::class, 'update'])->name('update');
+
 Route::get('/show/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea');
 
 Route::post('/ideas/{idea}', [IdeaController::class, 'store'])->name('vote');
