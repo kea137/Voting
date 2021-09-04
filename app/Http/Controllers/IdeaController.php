@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\IdeaStatusUpdatedMailable;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -297,12 +299,22 @@ class IdeaController extends Controller
         if(auth()->check()){
             $validated = $request->validate([
                 'status_radio'=>'required|integer',
-                'idea_id'=>'required|integer'
+                'idea_id'=>'required|integer',
+                'notify'=>'boolean',
             ]);
 
             Idea::where('id', $validated['idea_id'])->update([
                 'status_id'=>$validated['status_radio']
             ]);
+
+            if($validated['notify']){
+                $idea = Idea::where('id', $validated['idea_id'])->first();
+                $idea->votes()->select('name', 'email')->chunk(100, function($voters) use ($idea){
+                    foreach($voters as $user){
+                        Mail::to($user)->queue(new IdeaStatusUpdatedMailable($idea));
+                    }
+                });
+            }
 
             return redirect()->back();
         } else{

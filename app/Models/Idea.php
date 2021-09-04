@@ -45,6 +45,10 @@ class Idea extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function votes(){
+        return $this->belongsToMany(User::class, 'votes');
+    }
+
     public function voted(){
         if(auth()->check()){
             return Vote::where('user_id', auth()->user()->id)->where('idea_id', $this->id)->exists();

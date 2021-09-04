@@ -98,14 +98,14 @@
                                 </button>
                                 <button
                                     type="submit"
-                                    class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
+                                    class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue-500 text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3 disabled:opacity-50" :disabled="form.processing"
                                 >
                                     <span class="ml-1">Update</span>
                                 </button>
                             </div>
                             <div>
                                 <label class="font-normal inline-flex items-center">
-                                    <input type="checkbox" name="notify_voters" class="rounded bg-gray-200" checked="">
+                                    <input v-model="notify" v-on:change="notifier" type="checkbox" name="notify_voters" class="rounded bg-gray-200">
                                     <span class="ml-2">Notify all voters</span>
                                 </label>
                             </div>
@@ -166,6 +166,7 @@
                 status_radio: this.$page.props.idea.status.id,
                 form: this.$inertia.form({
                     status_radio: null,
+                    notify: false,
                     idea_id: this.$page.props.idea.id
                 }),
             }
@@ -187,6 +188,10 @@
                 if(!event.target.closest('.dropdown')){
                     this.bool = false
                 }
+            },
+
+            notifier: function(){
+                this.form.notify = true
             },
 
             closeReply: function(event){
