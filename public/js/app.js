@@ -21806,7 +21806,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'bg-green-500': 'In Progress' == $props.status,
       'bg-purple': 'Implemented' == $props.status,
       'bg-yellow-500': 'Considering' == $props.status,
-      'bg-gray-500': 'Open' == $props.status
+      'bg-gray-700': 'Open' == $props.status
     }, "bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2"])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.status), 3
   /* TEXT, CLASS */

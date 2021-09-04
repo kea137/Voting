@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\IdeaStatusUpdatedMailable;
+use App\Jobs\NotifyAllVoters;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Vote;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +35,7 @@ class IdeaController extends Controller
                 return $query->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
             })->load('user', 'category', 'status', 'vote'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
             'selected_category'=>(($category == null) ? '0' : $category),
@@ -67,7 +66,7 @@ class IdeaController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
             'selected_category'=>(($category == null) ? '0' : $category),
@@ -100,7 +99,7 @@ class IdeaController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
             'closed'=>Idea::where('status_id', 1)->get()->count(),
@@ -133,7 +132,7 @@ class IdeaController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
             'closed'=>Idea::where('status_id', 1)->get()->count(),
@@ -166,7 +165,7 @@ class IdeaController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'selected_category'=>(($category == null) ? '0' : $category),
             'selected_filter'=>(($filter == null) ? '0' : $filter),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
@@ -254,7 +253,7 @@ class IdeaController extends Controller
         return Inertia::render('Show', [
             'idea' => $idea->load('user', 'category', 'status', 'vote'),
             'categories' => Category::all(),
-            'all'=>Idea::where('status_id', 5)->get()->count(),
+            'all'=>Idea::all()->count(),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
             'inprogress'=>Idea::where('status_id', 2)->get()->count(),
             'implemented'=>Idea::where('status_id', 3)->get()->count(),
@@ -309,11 +308,7 @@ class IdeaController extends Controller
 
             if($validated['notify']){
                 $idea = Idea::where('id', $validated['idea_id'])->first();
-                $idea->votes()->select('name', 'email')->chunk(100, function($voters) use ($idea){
-                    foreach($voters as $user){
-                        Mail::to($user)->queue(new IdeaStatusUpdatedMailable($idea));
-                    }
-                });
+                NotifyAllVoters::dispatch($idea);
             }
 
             return redirect()->back();
