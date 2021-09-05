@@ -25,13 +25,14 @@
                                 <div class="text-gray-900">Comment</div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <div :class="{'text-white': true, 'bg-red-500': ('Closed'== status), 'bg-green-500': ('In Progress'==status), 'bg-purple': ('Implemented'==status), 'bg-yellow-500': ('Considering'==status), 'bg-gray-700': ('Open'==status)}" class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2">{{ status }}</div>
+                                <div :class="{'text-white': true, 'bg-red-500': ('Closed'== status), 'bg-green-500': ('In Progress'==status), 'bg-purple': ('Implemented'==status), 'bg-yellow-500': ('Considering'==status), 'bg-gray-500': ('Open'==status)}" class="bg-gray-200 text-xxs font-bold border border-none uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4 md:m-0 m-2">{{ status }}</div>
                                 <button @click="hide" @keydown.esc="hide" class="relative border border-none dropdown ml-8 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                                     </svg>
                                     <transition name="fade">
                                         <ul v-if="bool" class="absolute w-40 semi-bold z-30 bg-white md:ml-8 top-8 md:top-6 right-0 md:left-0 rounded-xl py-3 shadow-lg">
+                                            <li><p @click="edit" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Edit</p></li>
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Mark as Stamp</a></li>
                                             <li><a href="#" class="hover:bg-gray-200 my-1 transition duration-150 ease-in block">Delete Post</a></li>
                                         </ul>
@@ -97,16 +98,20 @@ export default {
                 this.bool = false
                 }
         },
+
+        edit: function(){
+            this.$emit('modalClicked', true)
+        },
     },
 
-    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status', 'vote', 'voted'],
+    props: ['id', 'title', 'description', 'slug', 'time', 'user_name', 'gravatar', 'category', 'status', 'vote', 'voted', 'modal'],
 
     watch: {
         bool(bool){
                 if(bool){
                     document.addEventListener('click', this.close)
                 }
-        }
+        },
     }
 
 }

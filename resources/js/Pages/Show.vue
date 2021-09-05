@@ -10,7 +10,7 @@
         </div>
 
 
-        <main-idea :id="idea.id" :title="idea.title" :gravatar="idea.user.email" :category="idea.category.name" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="idea.user.name" :voted="$page.props.voted" :status="idea.status.name" :vote="idea.vote.length" ></main-idea>
+        <main-idea @modalClicked="passModal" :modal="modal" :id="idea.id" :title="idea.title" :gravatar="idea.user.email" :category="idea.category.name" :description="idea.description" :slug="idea.slug" :time="idea.created_at" :user_name="idea.user.name" :voted="$page.props.voted" :status="idea.status.name" :vote="idea.vote.length" ></main-idea>
 
         <div class="flex items-center justify-between mt-4">
             <div class="flex justify-between items-center space-x-3 ml-3">
@@ -136,6 +136,7 @@
         <comment></comment>
         <admin-comment></admin-comment>
         <comment></comment>
+        <modal :modal="modal" @modalClosed="closeModal"></modal>
         </div>
     </app-layout>
 </template>
@@ -143,6 +144,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
     import Comment from '@/Comments/Comment.vue'
+    import Modal from '@/Ideas/Modal.vue'
     import MainIdea from '@/Ideas/MainIdea.vue'
     import AdminComment from '@/Comments/Admin_comment.vue'
     import { Link } from '@inertiajs/inertia-vue3'
@@ -151,6 +153,7 @@
         components: {
             AppLayout,
             MainIdea,
+            Modal,
             Comment,
             AdminComment,
             Link
@@ -161,6 +164,7 @@
                 replyBool: false,
                 statusBool: false,
                 bool: false,
+                modal: false,
                 back: '',
                 value: '',
                 status_radio: this.$page.props.idea.status.id,
@@ -178,6 +182,14 @@
             },
             hideReply: function(){
                 this.replyBool = !this.replyBool
+            },
+
+            passModal: function(value){
+                    this.modal = value
+            },
+
+            closeModal: function(value){
+                this.modal = value
             },
 
             hideStatus: function(){

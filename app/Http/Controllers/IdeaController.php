@@ -25,14 +25,14 @@ class IdeaController extends Controller
             'canRegister' => Route::has('register'),
             'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
                 if($filter == '0'){
-                    return $query->where('category_id', $category)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', $category)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 } else if($filter == '2'){
                     return $query->where('category_id', $category)->where('user_id', auth()->check() ? auth()->user()->id : '0')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 } else if($filter == '1'){
                     return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 }
             })->when(($category == null) && ($filter == null), function($query){
-                return $query->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                return $query->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
             })->load('user', 'category', 'status', 'vote'),
             'considering'=>Idea::where('status_id', 4)->get()->count(),
             'all'=>Idea::all()->count(),
@@ -74,14 +74,14 @@ class IdeaController extends Controller
             'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
                 if($filter == '0'){
-                    return $query->where('category_id', $category)->where('status_id', 4)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', $category)->where('status_id', 4)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 } else if($filter == '2'){
                     return $query->where('category_id', $category)->where('status_id', 4)->where('user_id', auth()->check() ? auth()->user()->id : '0')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 } else if($filter == '1'){
                     return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 4)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 }
             })->when(($category == null) && ($filter == null), function($query){
-                return $query->where('status_id', 4)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                return $query->where('status_id', 4)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
             })->load('user', 'category', 'status', 'vote'),
             'categories'=>Category::all(),
         ]);
@@ -107,14 +107,14 @@ class IdeaController extends Controller
             'selected_filter'=>(($filter == null) ? '0' : $filter),
             'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
                 if($filter == '0'){
-                    return $query->where('category_id', $category)->where('status_id', 2)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', $category)->where('status_id', 2)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 } else if($filter == '2'){
                     return $query->where('category_id', $category)->where('status_id', 2)->where('user_id', auth()->check() ? auth()->user()->id : '0')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 } else if($filter == '1'){
                     return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 2)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 }
             })->when(($category == null) && ($filter == null), function($query){
-                return $query->where('status_id', 2)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                return $query->where('status_id', 2)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
             })->load('user', 'category', 'status', 'vote'),
             'categories'=>Category::all(),
         ]);
@@ -140,14 +140,14 @@ class IdeaController extends Controller
             'selected_filter'=>(($filter == null) ? '0' : $filter),
             'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
                 if($filter == '0'){
-                    return $query->where('category_id', $category)->where('status_id', 3)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', $category)->where('status_id', 3)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 } else if($filter == '2'){
                     return $query->where('category_id', $category)->where('status_id', 3)->where('user_id', auth()->check() ? auth()->user()->id : '0')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 } else if($filter == '1'){
-                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 3)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 3)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 }
             })->when(($category == null) && ($filter == null), function($query){
-                return $query->where('status_id', 3)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                return $query->where('status_id', 3)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
             })->load('user', 'category', 'status', 'vote'),
             'categories'=>Category::all(),
         ]);
@@ -174,14 +174,14 @@ class IdeaController extends Controller
             'closed'=>Idea::where('status_id', 1)->get()->count(),
             'ideas'=>Idea::withCount('vote')->when($category != null, function($query) use($category, $filter){
                 if($filter == '0'){
-                    return $query->where('category_id', $category)->where('status_id', 1)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                    return $query->where('category_id', $category)->where('status_id', 1)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
                 } else if($filter == '2'){
                     return $query->where('category_id', $category)->where('status_id', 1)->where('user_id', auth()->check() ? auth()->user()->id : '0')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 } else if($filter == '1'){
                     return $query->where('category_id', ($category == '0') ? ['1','2','3','4'] : $category)->where('status_id', 1)->orderByDesc('vote_count')->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
                 }
             })->when(($category == null) && ($filter == null), function($query){
-                return $query->where('status_id', 1)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get();
+                return $query->where('status_id', 1)->addSelect(['userVoted'=>Vote::select('id')->where('user_id', auth()->check() ? auth()->user()->id : 0)->whereColumn('idea_id', 'ideas.id')])->get()->sortBy([['id', 'Desc']]);;
             })->load('user', 'category', 'status', 'vote'),
             'categories'=>Category::all(),
         ]);
@@ -281,9 +281,8 @@ class IdeaController extends Controller
      * @param  \App\Models\Idea  $idea
      * @return \Illuminate\Http\Response
      */
-    public function edit(Idea $idea)
+    public function edit(Request $request, Idea $idea)
     {
-        //
     }
 
     /**

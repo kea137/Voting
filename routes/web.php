@@ -38,6 +38,8 @@ Route::get('/show/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('id
 
 Route::post('/ideas/{idea}', [IdeaController::class, 'store'])->name('vote');
 
+Route::put('/ideas/{idea}', [IdeaController::class, 'edit'])->name('edit');
+
 Route::post('/ideas_create', [IdeaController::class, 'create'])->name('create');
 
 Route::get('/index_ideas', [IdeaController::class, 'index_ideas'])->name('index.ideas');
